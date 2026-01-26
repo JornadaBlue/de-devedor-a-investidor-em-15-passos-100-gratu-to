@@ -1,130 +1,245 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Trophy, ArrowRight, MessageCircle, Calendar, CheckCircle, Star } from 'lucide-react';
+import { 
+  Trophy, CheckCircle, Star, Sparkles, 
+  FileText, Users, TrendingUp, ArrowRight,
+  Shield, Zap, Clock, Gift
+} from 'lucide-react';
 
 export default function Encerramento() {
   const urlParams = new URLSearchParams(window.location.search);
   const userName = urlParams.get('nome') || 'Usuário';
+  const profileId = urlParams.get('id');
+
+  const [showUpsell, setShowUpsell] = useState(false);
 
   const achievements = [
-    'Organizou suas finanças pessoais',
-    'Criou hábitos financeiros saudáveis',
-    'Entendeu os fundamentos de investimento internacional',
-    'Está preparado para os próximos passos',
+    'Fez o diagnóstico completo da sua vida financeira',
+    'Organizou suas dívidas e criou um orçamento',
+    'Montou sua reserva de emergência',
+    'Entendeu os fundamentos de investimentos',
+    'Está pronto para dar os próximos passos',
   ];
 
+  const planFeatures = [
+    { icon: FileText, text: 'Plano personalizado por IA baseado no seu perfil' },
+    { icon: TrendingUp, text: 'Cronograma detalhado de quitação de dívidas' },
+    { icon: Shield, text: 'Estratégia de investimento para iniciantes' },
+    { icon: Zap, text: 'Acesso imediato na área logada' },
+  ];
+
+  const upsellFeatures = [
+    { icon: TrendingUp, text: 'Recomendações de ações e ETFs todo 5º dia útil' },
+    { icon: Users, text: 'Comunidade exclusiva de investidores' },
+    { icon: Star, text: 'Análises feitas por profissionais da Blue3 Investimentos' },
+    { icon: Clock, text: 'Suporte prioritário para dúvidas' },
+  ];
+
+  const handleBuyPlan = () => {
+    // Aqui vai a integração com Stripe
+    alert('Integração com Stripe será configurada. Produto: Plano Personalizado R$17');
+  };
+
+  const handleBuyUpsell = () => {
+    // Aqui vai a integração com Stripe (subscription)
+    alert('Integração com Stripe será configurada. Assinatura: R$27/mês');
+  };
+
+  const handleSkipUpsell = () => {
+    // Redirecionar para área logada ou página de confirmação
+    alert('Obrigado! Você receberá seu plano personalizado em breve.');
+  };
+
+  if (showUpsell) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="w-full max-w-lg"
+        >
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full mb-4">
+              <Gift className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-300 text-sm font-medium">Oferta Especial</span>
+            </div>
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+              Quer acelerar seus resultados?
+            </h1>
+            <p className="text-slate-400">
+              Receba recomendações de um profissional certificado
+            </p>
+          </div>
+
+          <div className="bg-white rounded-3xl p-6 shadow-2xl mb-4">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <p className="text-sm text-slate-500">Assinatura mensal</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-bold text-slate-900">R$27</span>
+                  <span className="text-slate-500">/mês</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">
+                  Blue3 Investimentos
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              {upsellFeatures.map((feature, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                    <feature.icon className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <span className="text-sm text-slate-700">{feature.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-4 bg-blue-50 rounded-xl mb-6">
+              <p className="text-sm text-blue-800">
+                <strong>Todo 5º dia útil</strong> você recebe por email as recomendações de ações e ETFs analisadas pela equipe da Blue3, escritório de assessoria do qual sou sócio.
+              </p>
+            </div>
+
+            <Button
+              onClick={handleBuyUpsell}
+              size="lg"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold py-6 rounded-xl shadow-lg"
+            >
+              Quero receber as recomendações
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
+
+          <button
+            onClick={handleSkipUpsell}
+            className="w-full text-center text-slate-400 hover:text-slate-300 text-sm py-3 transition-colors"
+          >
+            Não, obrigado. Quero apenas o plano personalizado.
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-2xl"
+        className="w-full max-w-lg"
       >
         {/* Celebration */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-amber-400 to-amber-500 rounded-3xl mb-6 shadow-2xl shadow-amber-500/30"
+            transition={{ delay: 0.2, type: 'spring' }}
+            className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-500 rounded-2xl mb-4 shadow-xl shadow-amber-500/30"
           >
-            <Trophy className="w-12 h-12 text-white" />
+            <Trophy className="w-10 h-10 text-white" />
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-3xl md:text-4xl font-bold text-white mb-4"
-          >
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
             Parabéns, {userName}! 🎉
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-xl text-slate-300"
-          >
-            Você completou a <span className="text-amber-400 font-semibold">Rota Internacional 14D</span>
-          </motion.p>
+          </h1>
+          <p className="text-slate-400">
+            Você completou os 15 passos da jornada
+          </p>
         </div>
 
-        {/* Achievements Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white rounded-3xl p-8 shadow-2xl mb-6"
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <Star className="w-6 h-6 text-amber-500" />
-            <h2 className="text-xl font-bold text-slate-900">O que você conquistou</h2>
-          </div>
-
-          <div className="space-y-4 mb-8">
-            {achievements.map((achievement, index) => (
+        {/* Achievements */}
+        <div className="bg-white/5 backdrop-blur rounded-2xl p-5 mb-6 border border-white/10">
+          <p className="text-sm text-slate-400 mb-3">O que você conquistou:</p>
+          <div className="space-y-2">
+            {achievements.map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 + index * 0.1 }}
-                className="flex items-center gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-100"
+                transition={{ delay: 0.3 + index * 0.1 }}
+                className="flex items-center gap-2"
               >
-                <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0" />
-                <span className="text-slate-700">{achievement}</span>
+                <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-sm text-slate-300">{item}</span>
               </motion.div>
             ))}
           </div>
+        </div>
 
-          <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-            <p className="text-slate-600 leading-relaxed">
-              <span className="font-semibold text-slate-800">Agora você tem</span> organização, clareza e base para seguir com mais segurança. O próximo passo é continuar aplicando o que aprendeu e, quando estiver pronto, dar os próximos passos no mundo dos investimentos.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* CTAs */}
+        {/* Offer Card */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
-          className="space-y-4"
+          transition={{ delay: 0.6 }}
+          className="bg-white rounded-3xl p-6 shadow-2xl"
         >
-          <Button
-            size="lg"
-            className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-900 font-semibold py-7 text-lg rounded-2xl shadow-lg shadow-amber-500/20"
-            onClick={() => window.open('https://wa.me/5500000000000?text=Olá! Completei a Rota Internacional 14D e quero saber mais sobre acompanhamento contínuo.', '_blank')}
-          >
-            <Calendar className="w-5 h-5 mr-2" />
-            Quero acompanhamento contínuo
-          </Button>
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="w-5 h-5 text-amber-500" />
+            <span className="text-sm font-semibold text-amber-600">Oferta Exclusiva</span>
+          </div>
+
+          <h2 className="text-xl font-bold text-slate-900 mb-2">
+            Seu Plano Personalizado
+          </h2>
+          <p className="text-slate-600 text-sm mb-4">
+            Uma IA vai analisar seu perfil e criar um plano detalhado e personalizado para você sair das dívidas e começar a investir.
+          </p>
+
+          <div className="space-y-3 mb-6">
+            {planFeatures.map((feature, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                  <feature.icon className="w-4 h-4 text-amber-600" />
+                </div>
+                <span className="text-sm text-slate-700">{feature.text}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl mb-6">
+            <div>
+              <p className="text-sm text-slate-500">Investimento único</p>
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-slate-900">R$17</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-slate-400 line-through">R$97</p>
+              <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full">
+                82% OFF
+              </span>
+            </div>
+          </div>
 
           <Button
+            onClick={() => {
+              handleBuyPlan();
+              setShowUpsell(true);
+            }}
             size="lg"
-            variant="outline"
-            className="w-full bg-white/10 border-2 border-white/20 text-white hover:bg-white/20 font-semibold py-7 text-lg rounded-2xl"
-            onClick={() => window.open('https://wa.me/5500000000000?text=Olá! Completei a Rota Internacional 14D e gostaria de falar com a Déia.', '_blank')}
+            className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-900 font-semibold py-6 rounded-xl shadow-lg shadow-amber-500/20"
           >
-            <MessageCircle className="w-5 h-5 mr-2" />
-            Quero falar com a Déia
+            Quero meu plano personalizado
+            <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
+
+          <p className="text-center text-xs text-slate-400 mt-4">
+            Pagamento seguro via Stripe • Acesso imediato
+          </p>
         </motion.div>
 
         {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.1 }}
-          className="text-center mt-8"
-        >
+        <div className="text-center mt-6">
           <p className="text-slate-500 text-sm">
             Criado por <span className="text-amber-400 font-medium">Jhony Bosio</span>
           </p>
-          <p className="text-slate-600 text-xs mt-1">Assessor de Investimentos</p>
-        </motion.div>
+          <p className="text-slate-600 text-xs">Assessor de Investimentos • Blue3 Investimentos</p>
+        </div>
       </motion.div>
     </div>
   );

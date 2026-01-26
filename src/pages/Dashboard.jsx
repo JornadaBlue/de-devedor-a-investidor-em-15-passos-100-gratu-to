@@ -1,37 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Loader2 } from 'lucide-react';
-import ProgressHeader from '../components/dashboard/ProgressHeader';
-import DayCard from '../components/dashboard/DayCard';
-import DayContent from '../components/dashboard/DayContent';
+import { Loader2, Trophy } from 'lucide-react';
+import StepCard from '../components/dashboard/StepCard';
+import StepContent from '../components/dashboard/StepContent';
 
-const dayPlan = [
-  { day: 1, title: 'Identifique seus vazamentos', description: 'Descubra para onde vai seu dinheiro', phase: 'estancar' },
-  { day: 2, title: 'Organize seu cartão de crédito', description: 'Transforme o vilão em aliado', phase: 'estancar' },
-  { day: 3, title: 'Separe o dinheiro do mês', description: 'Técnica dos potes para nunca mais faltar', phase: 'estancar' },
-  { day: 4, title: 'Mapeie suas dívidas', description: 'Conheça o inimigo para vencê-lo', phase: 'estancar' },
-  { day: 5, title: 'Crie sua rotina financeira', description: '10 minutos por semana que mudam tudo', phase: 'sobra' },
-  { day: 6, title: 'Defina sua regra de gastos', description: 'Regras simples evitam decisões ruins', phase: 'sobra' },
-  { day: 7, title: 'Comece sua primeira reserva', description: 'Qualquer valor é melhor que nenhum', phase: 'sobra' },
-  { day: 8, title: 'Automatize suas finanças', description: 'O que é automático, acontece', phase: 'sobra' },
-  { day: 9, title: 'Revise e ajuste', description: 'Planos precisam de ajustes', phase: 'sobra' },
-  { day: 10, title: 'Por que investir fora', description: 'Diversificar é proteger', phase: 'internacional' },
-  { day: 11, title: 'Entenda os riscos', description: 'Conheça antes de investir', phase: 'internacional' },
-  { day: 12, title: 'Conheça as opções', description: 'ETFs, BDRs e mais', phase: 'internacional' },
-  { day: 13, title: 'Visão de longo prazo', description: 'Maratona, não corrida', phase: 'internacional' },
-  { day: 14, title: 'Seus próximos passos', description: 'Continue a jornada', phase: 'internacional' },
+const steps = [
+  { step: 1, title: 'Encare sua realidade', description: 'Raio-x financeiro', phase: 'diagnostico' },
+  { step: 2, title: 'Identifique vazamentos', description: 'Gastos invisíveis', phase: 'diagnostico' },
+  { step: 3, title: 'Mapeie suas dívidas', description: 'Conheça o inimigo', phase: 'diagnostico' },
+  { step: 4, title: 'Crie seu orçamento', description: 'Regra 50-30-20', phase: 'organizacao' },
+  { step: 5, title: 'Separe suas contas', description: 'Potes de dinheiro', phase: 'organizacao' },
+  { step: 6, title: 'Elimine dívidas', description: 'Renegocie e quite', phase: 'organizacao' },
+  { step: 7, title: 'Crie regras pessoais', description: 'Decisões automáticas', phase: 'organizacao' },
+  { step: 8, title: 'Reserva de emergência', description: 'Sua rede de proteção', phase: 'construcao' },
+  { step: 9, title: 'Automatize finanças', description: 'Piloto automático', phase: 'construcao' },
+  { step: 10, title: 'Rotina financeira', description: '10 min por semana', phase: 'construcao' },
+  { step: 11, title: 'Juros compostos', description: 'Seu maior aliado', phase: 'mentalidade' },
+  { step: 12, title: 'Defina objetivos', description: 'Dinheiro com propósito', phase: 'mentalidade' },
+  { step: 13, title: 'Opções de investimento', description: 'Renda fixa e variável', phase: 'proximos' },
+  { step: 14, title: 'Abra conta em corretora', description: 'Seu portal de investimentos', phase: 'proximos' },
+  { step: 15, title: 'Primeiro investimento', description: 'Você é um investidor!', phase: 'proximos' },
 ];
 
+const phaseInfo = {
+  diagnostico: { label: 'Diagnóstico', color: 'bg-orange-500' },
+  organizacao: { label: 'Organização', color: 'bg-blue-500' },
+  construcao: { label: 'Construção', color: 'bg-purple-500' },
+  mentalidade: { label: 'Mentalidade', color: 'bg-pink-500' },
+  proximos: { label: 'Próximos Passos', color: 'bg-emerald-500' },
+};
+
 export default function Dashboard() {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const urlParams = new URLSearchParams(window.location.search);
   const profileId = urlParams.get('id');
   
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [activeTab, setActiveTab] = useState('estancar');
+  const [selectedStep, setSelectedStep] = useState(null);
 
   const { data: profile, isLoading } = useQuery({
     queryKey: ['userProfile', profileId],
@@ -44,35 +53,32 @@ export default function Dashboard() {
   });
 
   const updateProgressMutation = useMutation({
-    mutationFn: async (day) => {
+    mutationFn: async (step) => {
       if (!profile) return;
       const newProgress = [...(profile.progresso || [])];
-      if (!newProgress.includes(day)) {
-        newProgress.push(day);
+      if (!newProgress.includes(step)) {
+        newProgress.push(step);
       }
       await base44.entities.UserProfile.update(profile.id, { progresso: newProgress });
       return newProgress;
     },
-    onSuccess: () => {
+    onSuccess: (newProgress) => {
       queryClient.invalidateQueries({ queryKey: ['userProfile', profileId] });
+      
+      // Se completou todos os 15 passos, vai para encerramento
+      if (newProgress && newProgress.length >= 15) {
+        navigate(createPageUrl('Encerramento') + `?id=${profileId}&nome=${encodeURIComponent(profile?.nome || 'Usuário')}`);
+      }
     },
   });
 
-  const completedDays = profile?.progresso || [];
-  const currentDay = completedDays.length + 1;
+  const completedSteps = profile?.progresso || [];
+  const currentStep = completedSteps.length + 1;
+  const progress = (completedSteps.length / 15) * 100;
 
-  const handleCompleteDay = (day) => {
-    updateProgressMutation.mutate(day);
-    setSelectedDay(null);
-  };
-
-  const getPhaseLabel = (phase) => {
-    switch (phase) {
-      case 'estancar': return 'Dias 1-4 • Estancar';
-      case 'sobra': return 'Dias 5-9 • Criar Sobra';
-      case 'internacional': return 'Dias 10-14 • Base Internacional';
-      default: return '';
-    }
+  const handleCompleteStep = (step) => {
+    updateProgressMutation.mutate(step);
+    setSelectedStep(null);
   };
 
   if (isLoading) {
@@ -83,83 +89,77 @@ export default function Dashboard() {
     );
   }
 
-  if (selectedDay) {
+  if (selectedStep) {
     return (
-      <DayContent
-        day={selectedDay}
-        onComplete={handleCompleteDay}
-        onBack={() => setSelectedDay(null)}
-        isCompleted={completedDays.includes(selectedDay)}
+      <StepContent
+        step={selectedStep}
+        onComplete={handleCompleteStep}
+        onBack={() => setSelectedStep(null)}
+        isCompleted={completedSteps.includes(selectedStep)}
       />
     );
   }
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="container mx-auto px-4 py-6 max-w-3xl">
-        {/* Progress Header */}
-        <ProgressHeader
-          userName={profile?.nome || 'Usuário'}
-          completedDays={completedDays.length}
-          totalDays={14}
-          currentStreak={completedDays.length > 0 ? Math.min(completedDays.length, 14) : 0}
-        />
+      <div className="container mx-auto px-4 py-6 max-w-lg">
+        {/* Header */}
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-5 rounded-2xl mb-6">
+          <p className="text-slate-400 text-sm">Olá, {profile?.nome || 'Usuário'}</p>
+          <h1 className="text-xl font-bold mb-4">Sua jornada de 15 passos</h1>
+          
+          {/* Progress */}
+          <div className="flex items-center justify-between text-sm mb-2">
+            <span className="text-slate-400">{completedSteps.length} de 15 passos</span>
+            <span className="text-amber-400 font-medium">{Math.round(progress)}%</span>
+          </div>
+          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.5 }}
+            />
+          </div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
-          <TabsList className="w-full bg-white border border-slate-200 p-1.5 rounded-2xl h-auto flex-wrap">
-            <TabsTrigger
-              value="estancar"
-              className="flex-1 min-w-[100px] rounded-xl py-3 text-sm font-medium data-[state=active]:bg-orange-500 data-[state=active]:text-white"
-            >
-              Estancar
-            </TabsTrigger>
-            <TabsTrigger
-              value="sobra"
-              className="flex-1 min-w-[100px] rounded-xl py-3 text-sm font-medium data-[state=active]:bg-blue-500 data-[state=active]:text-white"
-            >
-              Criar Sobra
-            </TabsTrigger>
-            <TabsTrigger
-              value="internacional"
-              className="flex-1 min-w-[100px] rounded-xl py-3 text-sm font-medium data-[state=active]:bg-emerald-500 data-[state=active]:text-white"
-            >
-              Internacional
-            </TabsTrigger>
-          </TabsList>
+          {completedSteps.length >= 15 && (
+            <div className="mt-4 p-3 bg-emerald-500/20 border border-emerald-500/30 rounded-xl flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-emerald-400" />
+              <span className="text-sm text-emerald-300 font-medium">Você completou todos os passos!</span>
+            </div>
+          )}
+        </div>
 
-          {['estancar', 'sobra', 'internacional'].map((phase) => (
-            <TabsContent key={phase} value={phase} className="mt-6">
-              <p className="text-slate-500 text-sm mb-4 font-medium">
-                {getPhaseLabel(phase)}
-              </p>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="space-y-3"
-              >
-                {dayPlan
-                  .filter((day) => day.phase === phase)
-                  .map((day, index) => (
-                    <DayCard
-                      key={day.day}
-                      day={day.day}
-                      title={day.title}
-                      description={day.description}
-                      isCompleted={completedDays.includes(day.day)}
-                      isLocked={day.day > currentDay && !completedDays.includes(day.day)}
-                      isCurrent={day.day === currentDay}
-                      onClick={() => {
-                        if (day.day <= currentDay || completedDays.includes(day.day)) {
-                          setSelectedDay(day.day);
-                        }
-                      }}
-                    />
-                  ))}
-              </motion.div>
-            </TabsContent>
-          ))}
-        </Tabs>
+        {/* Steps by phase */}
+        {Object.entries(phaseInfo).map(([phaseKey, phaseData]) => {
+          const phaseSteps = steps.filter(s => s.phase === phaseKey);
+          return (
+            <div key={phaseKey} className="mb-6">
+              <div className="flex items-center gap-2 mb-3">
+                <div className={`w-2 h-2 rounded-full ${phaseData.color}`} />
+                <span className="text-sm font-semibold text-slate-700">{phaseData.label}</span>
+              </div>
+              <div className="space-y-2">
+                {phaseSteps.map((s) => (
+                  <StepCard
+                    key={s.step}
+                    step={s.step}
+                    title={s.title}
+                    description={s.description}
+                    isCompleted={completedSteps.includes(s.step)}
+                    isLocked={s.step > currentStep && !completedSteps.includes(s.step)}
+                    isCurrent={s.step === currentStep}
+                    onClick={() => {
+                      if (s.step <= currentStep || completedSteps.includes(s.step)) {
+                        setSelectedStep(s.step);
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
