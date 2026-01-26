@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Check, User, Phone, Mail, TrendingDown, Target, Clock, PiggyBank, AlertCircle } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Check, User, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,7 +9,7 @@ const questions = [
   {
     id: 'personal',
     title: 'Vamos começar pelo básico',
-    subtitle: 'Precisamos de algumas informações para personalizar seu plano',
+    subtitle: 'Só precisamos do seu nome e idade',
     type: 'personal',
   },
   {
@@ -84,8 +84,7 @@ export default function QuizForm({ onComplete }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({
     nome: '',
-    whatsapp: '',
-    email: '',
+    idade: '',
     como_termina_mes: '',
     maior_dor: '',
     possui_dividas: null,
@@ -101,9 +100,10 @@ export default function QuizForm({ onComplete }) {
   const validatePersonal = () => {
     const newErrors = {};
     if (!answers.nome.trim()) newErrors.nome = 'Nome é obrigatório';
-    if (!answers.email.trim()) newErrors.email = 'E-mail é obrigatório';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email)) newErrors.email = 'E-mail inválido';
-    if (!answers.whatsapp.trim()) newErrors.whatsapp = 'WhatsApp é obrigatório';
+    if (!answers.idade.trim()) newErrors.idade = 'Idade é obrigatória';
+    else if (isNaN(answers.idade) || parseInt(answers.idade) < 18 || parseInt(answers.idade) > 100) {
+      newErrors.idade = 'Informe uma idade válida (18-100)';
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -138,7 +138,7 @@ export default function QuizForm({ onComplete }) {
 
   const canProceed = () => {
     if (currentQuestion.type === 'personal') {
-      return answers.nome && answers.email && answers.whatsapp;
+      return answers.nome && answers.idade;
     }
     return answers[currentQuestion.id] !== '' && answers[currentQuestion.id] !== null;
   };
@@ -185,40 +185,30 @@ export default function QuizForm({ onComplete }) {
               <div className="space-y-5">
                 <div>
                   <Label className="text-slate-700 font-medium mb-2 flex items-center gap-2">
-                    <User className="w-4 h-4" /> Nome completo
+                    <User className="w-4 h-4" /> Seu nome
                   </Label>
                   <Input
                     value={answers.nome}
                     onChange={(e) => setAnswers({ ...answers, nome: e.target.value })}
-                    placeholder="Seu nome"
+                    placeholder="Como você quer ser chamado?"
                     className={`h-14 text-lg border-2 ${errors.nome ? 'border-red-300' : 'border-slate-200'} focus:border-amber-400 rounded-xl`}
                   />
                   {errors.nome && <p className="text-red-500 text-sm mt-1">{errors.nome}</p>}
                 </div>
                 <div>
                   <Label className="text-slate-700 font-medium mb-2 flex items-center gap-2">
-                    <Phone className="w-4 h-4" /> WhatsApp
+                    <Calendar className="w-4 h-4" /> Sua idade
                   </Label>
                   <Input
-                    value={answers.whatsapp}
-                    onChange={(e) => setAnswers({ ...answers, whatsapp: e.target.value })}
-                    placeholder="(00) 00000-0000"
-                    className={`h-14 text-lg border-2 ${errors.whatsapp ? 'border-red-300' : 'border-slate-200'} focus:border-amber-400 rounded-xl`}
+                    type="number"
+                    value={answers.idade}
+                    onChange={(e) => setAnswers({ ...answers, idade: e.target.value })}
+                    placeholder="Ex: 32"
+                    min="18"
+                    max="100"
+                    className={`h-14 text-lg border-2 ${errors.idade ? 'border-red-300' : 'border-slate-200'} focus:border-amber-400 rounded-xl`}
                   />
-                  {errors.whatsapp && <p className="text-red-500 text-sm mt-1">{errors.whatsapp}</p>}
-                </div>
-                <div>
-                  <Label className="text-slate-700 font-medium mb-2 flex items-center gap-2">
-                    <Mail className="w-4 h-4" /> E-mail
-                  </Label>
-                  <Input
-                    type="email"
-                    value={answers.email}
-                    onChange={(e) => setAnswers({ ...answers, email: e.target.value })}
-                    placeholder="seu@email.com"
-                    className={`h-14 text-lg border-2 ${errors.email ? 'border-red-300' : 'border-slate-200'} focus:border-amber-400 rounded-xl`}
-                  />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                  {errors.idade && <p className="text-red-500 text-sm mt-1">{errors.idade}</p>}
                 </div>
               </div>
             ) : (
