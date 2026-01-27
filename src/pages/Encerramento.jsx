@@ -229,7 +229,7 @@ export default function Encerramento() {
           </Button>
 
           <p className="text-center text-xs text-slate-400 mt-4">
-            Pagamento seguro via Stripe • Acesso imediato
+            Pagamento seguro via Hotmart • Acesso imediato
           </p>
         </motion.div>
 
