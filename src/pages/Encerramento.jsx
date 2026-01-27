@@ -37,8 +37,8 @@ export default function Encerramento() {
   ];
 
   const handleBuyPlan = () => {
-    // Aqui vai a integração com Stripe
-    alert('Integração com Stripe será configurada. Produto: Plano Personalizado R$17');
+    // Redirecionar para checkout Hotmart
+    window.location.href = 'https://pay.hotmart.com/H104116853S';
   };
 
   const handleBuyUpsell = () => {
