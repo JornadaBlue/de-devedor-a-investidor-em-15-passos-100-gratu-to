@@ -8,16 +8,33 @@ export default function Quiz() {
   const navigate = useNavigate();
 
   const calculateProfile = (answers) => {
-    // Perfil C: Devedor - termina em falta OU tem dívidas
-    if (answers.como_termina_mes === 'falta' || answers.possui_dividas === true) {
+    // Perfil C: Endividado e desorganizado - termina em falta E tem dívidas
+    if (answers.como_termina_mes === 'falta' && answers.possui_dividas === true) {
       return 'C';
     }
-    // Perfil B: Organizado sem estratégia - termina em zero e não investe fora
-    if (answers.como_termina_mes === 'zero' && answers.ja_investe !== 'fora') {
+    
+    // Perfil D: Sem dívidas mas sem sobra - termina em zero OU falta, mas SEM dívidas
+    if ((answers.como_termina_mes === 'zero' || answers.como_termina_mes === 'falta') && answers.possui_dividas === false) {
+      return 'D';
+    }
+    
+    // Perfil E: Investidor ansioso e inconsistente - já investe mas tem dificuldade em manter estratégia
+    if (answers.ja_investe !== 'nunca' && answers.como_termina_mes === 'sobra' && answers.maior_dor === 'medo_investir') {
+      return 'E';
+    }
+    
+    // Perfil B: Organizado e iniciando investimentos - termina em sobra mas ainda não investe fora ou está iniciando
+    if (answers.como_termina_mes === 'sobra' && (answers.ja_investe === 'nunca' || answers.ja_investe === 'brasil')) {
       return 'B';
     }
-    // Perfil A: Base pronta - termina em sobra
-    return 'A';
+    
+    // Perfil A: Investidor básico buscando otimização - termina em sobra e já investe
+    if (answers.como_termina_mes === 'sobra' && answers.ja_investe === 'fora') {
+      return 'A';
+    }
+    
+    // Default: Perfil D (sem dívidas mas precisa organizar)
+    return 'D';
   };
 
   const handleComplete = async (answers) => {

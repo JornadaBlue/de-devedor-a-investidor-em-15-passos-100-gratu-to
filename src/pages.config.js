@@ -3,6 +3,7 @@ import Encerramento from './pages/Encerramento';
 import Landing from './pages/Landing';
 import Quiz from './pages/Quiz';
 import Resultado from './pages/Resultado';
+import MeuPlano from './pages/MeuPlano';
 
 
 export const PAGES = {
@@ -11,6 +12,7 @@ export const PAGES = {
     "Landing": Landing,
     "Quiz": Quiz,
     "Resultado": Resultado,
+    "MeuPlano": MeuPlano,
 }
 
 export const pagesConfig = {
