@@ -40,14 +40,14 @@ const profiles = {
     bgColor: 'bg-emerald-50',
     borderColor: 'border-emerald-200',
     title: 'Perfil Base Pronta',
-    subtitle: 'Prioridade: Expandir Horizontes',
-    description: 'Você já tem base. Agora é hora de estruturar os próximos passos com segurança.',
+    subtitle: 'Prioridade: Começar a Investir',
+    description: 'Você já tem base. Agora é hora de começar a investir em ações e ETFs no Brasil.',
     highlights: [
-      'Entender o cenário de investimentos internacionais',
+      'Entender o cenário de investimentos no Brasil',
       'Conhecer as melhores práticas para diversificação',
       'Criar um plano de ação personalizado',
     ],
-    message: 'Nos próximos 15 passos, vamos solidificar sua base e mostrar o caminho para investir com consciência.',
+    message: 'Nos próximos 15 passos, vamos solidificar sua base e mostrar o caminho para investir em ações e ETFs.',
   },
 };
 

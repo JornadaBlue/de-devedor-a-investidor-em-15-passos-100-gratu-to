@@ -53,7 +53,7 @@ const questions = [
     options: [
       { value: 'nunca', label: 'Nunca investi', icon: '🌱', description: 'Ainda não comecei' },
       { value: 'brasil', label: 'Só no Brasil', icon: '🇧🇷', description: 'Poupança, CDB, ações BR' },
-      { value: 'fora', label: 'Já investi fora', icon: '🌎', description: 'Dólar, ETFs, stocks' },
+      { value: 'fora', label: 'Sim, com experiência', icon: '📊', description: 'Ações, ETFs, FIIs' },
     ],
   },
   {
@@ -64,7 +64,7 @@ const questions = [
     options: [
       { value: 'sair_dividas', label: 'Sair das dívidas', icon: '🔓', description: 'Quitar e respirar aliviado' },
       { value: 'organizar_sobrar', label: 'Organizar e sobrar', icon: '📈', description: 'Ter controle e guardar' },
-      { value: 'investir_fora', label: 'Investir fora', icon: '🚀', description: 'Diversificar internacionalmente' },
+      { value: 'investir_fora', label: 'Começar a investir', icon: '🚀', description: 'Ações e ETFs no Brasil' },
     ],
   },
   {
