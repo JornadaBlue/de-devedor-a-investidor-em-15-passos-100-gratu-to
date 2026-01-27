@@ -23,10 +23,10 @@ export default function Encerramento() {
   ];
 
   const planFeatures = [
-    { icon: FileText, text: 'Plano personalizado por IA baseado no seu perfil' },
-    { icon: TrendingUp, text: 'Cronograma detalhado de quitação de dívidas' },
+    { icon: FileText, text: 'Plano personalizado baseado no seu perfil e em suas respostas' },
     { icon: Shield, text: 'Estratégia de investimento para iniciantes' },
     { icon: Zap, text: 'Acesso imediato na área logada' },
+    { icon: Users, text: 'Acesso a comunidade exclusiva no Telegram' },
   ];
 
   const upsellFeatures = [
@@ -187,7 +187,7 @@ export default function Encerramento() {
             Seu Plano Personalizado
           </h2>
           <p className="text-slate-600 text-sm mb-4">
-            Uma IA vai analisar seu perfil e criar um plano detalhado e personalizado para você sair das dívidas e começar a investir.
+            Jhony Bosio vai preparar um plano detalhado e personalizado para você sair das dívidas ou se organizar melhor e começar a investir.
           </p>
 
           <div className="space-y-3 mb-6">
