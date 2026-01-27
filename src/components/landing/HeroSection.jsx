@@ -29,17 +29,16 @@ export default function HeroSection({ onStart }) {
           >
             <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
             <span className="text-amber-300 text-sm font-medium tracking-wide">
-              Método de 14 dias
+              Método de 15 passos
             </span>
           </motion.div>
 
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-            De devedor a{' '}
+            15 passos para ir de{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">
-              investidor internacional
-            </span>{' '}
-            em 14 dias
+              Devedor a Investidor
+            </span>
           </h1>
 
           {/* Subheadline */}
