@@ -43,7 +43,7 @@ export default function HeroSection({ onStart }) {
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Um plano simples para organizar seu dinheiro, criar sobra e construir a base para investir fora do Brasil com segurança.
+            Um plano simples para organizar seu dinheiro, criar sobra e começar a investir em ações e ETFs no Brasil.
           </p>
 
           {/* Features */}
