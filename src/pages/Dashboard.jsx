@@ -105,7 +105,10 @@ export default function Dashboard() {
       <div className="container mx-auto px-4 py-6 max-w-lg">
         {/* Header */}
         <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-5 rounded-2xl mb-6">
-          <p className="text-slate-400 text-sm">Olá, {profile?.nome || 'Usuário'}</p>
+          <div className="flex items-center justify-between mb-1">
+            <p className="text-slate-400 text-sm">Olá, {profile?.nome || 'Usuário'}</p>
+            <span className="px-2 py-1 bg-white/10 text-xs text-slate-300 rounded-full">Plano Gratuito</span>
+          </div>
           <h1 className="text-xl font-bold mb-4">Sua jornada de 15 passos</h1>
           
           {/* Progress */}
