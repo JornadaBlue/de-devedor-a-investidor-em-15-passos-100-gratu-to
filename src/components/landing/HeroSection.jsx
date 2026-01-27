@@ -82,9 +82,18 @@ export default function HeroSection({ onStart }) {
               Começar diagnóstico
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <p className="text-slate-500 text-sm mt-4">
-              Gratuito • 3 minutos • Sem compromisso
-            </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+              className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full"
+            >
+              <span className="text-emerald-400 font-bold text-base">✓ Gratuito</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-200 font-medium text-base">3 minutos</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-200 font-medium text-base">Sem compromisso</span>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
