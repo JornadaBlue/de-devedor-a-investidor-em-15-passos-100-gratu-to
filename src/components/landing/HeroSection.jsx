@@ -29,7 +29,7 @@ export default function HeroSection({ onStart }) {
           >
             <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
             <span className="text-amber-300 text-sm font-medium tracking-wide">
-              Método de 15 passos
+              De Devedor a Investidor
             </span>
           </motion.div>
 
@@ -51,7 +51,7 @@ export default function HeroSection({ onStart }) {
             {[
               { icon: Wallet, text: 'Organize sua vida financeira' },
               { icon: Shield, text: 'Elimine vazamentos invisíveis' },
-              { icon: TrendingUp, text: 'Invista internacionalmente' },
+              { icon: TrendingUp, text: 'Comece a investir com segurança' },
             ].map((feature, index) => (
               <motion.div
                 key={index}

@@ -109,7 +109,7 @@ export default function Dashboard() {
             <p className="text-slate-400 text-sm">Olá, {profile?.nome || 'Usuário'}</p>
             <span className="px-2 py-1 bg-white/10 text-xs text-slate-300 rounded-full">Plano Gratuito</span>
           </div>
-          <h1 className="text-xl font-bold mb-4">Sua jornada de 15 passos</h1>
+          <h1 className="text-xl font-bold mb-4">De Devedor a Investidor</h1>
           
           {/* Progress */}
           <div className="flex items-center justify-between text-sm mb-2">
