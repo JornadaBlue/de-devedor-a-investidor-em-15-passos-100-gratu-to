@@ -6,256 +6,262 @@ import { Button } from '@/components/ui/button';
 const stepsContent = {
   1: {
     phase: 'Diagnóstico',
-    title: 'Encare sua realidade financeira',
+    title: 'Raio X Financeiro em 30 Minutos',
     duration: '3 min',
-    intro: 'O primeiro passo é olhar de frente para sua situação atual.',
-    content: `Antes de qualquer mudança, você precisa saber exatamente onde está. Muita gente evita olhar para os números por medo, mas isso só piora a situação.
+    intro: 'Não existe planejamento sem clareza.',
+    content: `Você precisa saber exatamente para onde o dinheiro vai. Muita gente evita olhar para os números, mas isso só piora a situação.
 
 **Hoje você vai:**
-Fazer um raio-x rápido da sua vida financeira. Sem julgamento, apenas clareza.`,
+Fazer um raio-x completo da sua vida financeira. Sem julgamento, apenas clareza.`,
     tasks: [
-      'Anote sua renda mensal líquida',
-      'Liste seus 5 maiores gastos mensais',
-      'Calcule quanto sobra (ou falta) no fim do mês',
+      'Listar todas as rendas do mês',
+      'Listar todos os gastos fixos',
+      'Listar todos os gastos variáveis',
     ],
   },
   2: {
     phase: 'Diagnóstico',
-    title: 'Identifique os vazamentos',
+    title: 'Identificando Vazamentos de Dinheiro',
     duration: '3 min',
-    intro: 'Pequenos gastos repetidos drenam seu dinheiro sem você perceber.',
-    content: `Vazamentos são aqueles gastos que parecem pequenos mas que, somados, fazem uma diferença enorme. Assinaturas esquecidas, delivery frequente, compras por impulso.
+    intro: 'Pequenos gastos recorrentes sabotam o mês.',
+    content: `Vazamentos são gastos que parecem pequenos mas que, somados, fazem diferença enorme. Assinaturas esquecidas, delivery frequente, compras por impulso.
 
 **A regra é simples:**
 Se você não usa ou não precisa, está vazando dinheiro.`,
     tasks: [
-      'Revise suas assinaturas (streaming, apps, etc)',
-      'Olhe os últimos 30 dias do cartão de crédito',
-      'Identifique 3 gastos que poderia eliminar',
+      'Assinaturas pouco usadas',
+      'Compras por impulso',
+      'Gastos automáticos esquecidos',
     ],
   },
   3: {
     phase: 'Diagnóstico',
-    title: 'Mapeie suas dívidas',
+    title: 'Uso Inteligente do Crédito',
     duration: '3 min',
-    intro: 'Conhecer o inimigo é metade da batalha.',
-    content: `Se você tem dívidas, precisa saber exatamente quanto deve, para quem e a qual taxa de juros. Isso não é para se assustar, é para ter controle.
+    intro: 'Crédito não é renda extra e pode virar armadilha.',
+    content: `Cartão de crédito mal usado é um dos maiores vilões financeiros. Ele não aumenta seu poder de compra, apenas adia o pagamento.
 
-**Priorize assim:**
-1. Dívidas com juros altos (cartão, cheque especial)
-2. Financiamentos e empréstimos
-3. Dívidas sem juros`,
+**Regra de ouro:**
+Se não pode pagar à vista, não pode comprar parcelado.`,
     tasks: [
-      'Liste todas as suas dívidas',
-      'Anote o valor total e a parcela mensal de cada',
-      'Identifique qual tem a maior taxa de juros',
+      'Cartões ativos',
+      'Limites totais',
+      'Parcelamentos em andamento',
     ],
   },
   4: {
     phase: 'Organização',
-    title: 'Crie seu orçamento simples',
+    title: 'Criando Sobra Todo Mês',
     duration: '3 min',
-    intro: 'Orçamento não é prisão, é liberdade.',
-    content: `Um orçamento simples te dá controle sobre seu dinheiro. A regra 50-30-20 é um bom começo:
+    intro: 'Investir só começa quando sobra dinheiro.',
+    content: `Se você gasta tudo que ganha, nunca vai investir. Criar sobra é o segredo para começar.
 
-**50%** → Necessidades (moradia, alimentação, transporte)
-**30%** → Desejos (lazer, compras não essenciais)
-**20%** → Objetivos (reserva, quitação de dívidas)
+**A fórmula:**
+Renda - Gastos = Sobra (e não Renda - Sobra = Gastos)
 
-Ajuste os percentuais conforme sua realidade.`,
+Comece com qualquer valor. R$50, R$100, o que der.`,
     tasks: [
-      'Divida sua renda usando a regra 50-30-20',
-      'Ajuste os valores para sua realidade',
-      'Defina um limite máximo para gastos variáveis',
+      'Definir um valor mínimo de sobra',
+      'Ajustar gastos ao novo valor',
+      'Tratar sobra como compromisso',
     ],
   },
   5: {
     phase: 'Organização',
-    title: 'Separe suas contas',
+    title: 'Reserva de Emergência Sem Complicação',
     duration: '3 min',
-    intro: 'Dinheiro misturado é dinheiro perdido.',
-    content: `Ter uma conta só para tudo dificulta o controle. O ideal é separar:
+    intro: 'Reserva não é investimento, é proteção.',
+    content: `A reserva de emergência te protege de imprevistos sem precisar se endividar. Não é para render muito, é para estar disponível quando precisar.
 
-**Conta corrente:** gastos do dia a dia
-**Conta reserva:** dinheiro para emergências
-**Conta investimentos:** quando estiver pronto
+**Meta inicial:** 3 meses de gastos essenciais
+**Meta ideal:** 6 meses de gastos essenciais
 
-Não precisa abrir várias contas - pode usar "potes" virtuais.`,
+Guarde em aplicação segura e de fácil resgate.`,
     tasks: [
-      'Defina como vai separar seu dinheiro',
-      'Crie uma conta ou cofre separado para reserva',
-      'Automatize transferência assim que receber',
+      'Definir quanto representa 3 a 6 meses de gastos',
+      'Separar esse dinheiro do dia a dia',
+      'Não usar para consumo',
     ],
   },
   6: {
     phase: 'Organização',
-    title: 'Elimine ou renegocie dívidas',
-    duration: '5 min',
-    intro: 'Dívida cara é âncora que te puxa para baixo.',
-    content: `Com suas dívidas mapeadas, é hora de agir. A estratégia:
+    title: 'Separando Curto, Médio e Longo Prazo',
+    duration: '3 min',
+    intro: 'Misturar objetivos gera decisões ruins.',
+    content: `Cada dinheiro tem uma função. Misturar tudo é o erro mais comum.
 
-**1. Dívidas pequenas:** quite de uma vez se possível
-**2. Dívidas grandes:** renegocie taxas menores
-**3. Cartão de crédito:** NUNCA pague só o mínimo
+**Curto prazo:** gastos do dia a dia (conta corrente)
+**Médio prazo:** objetivos próximos (viagem, celular)
+**Longo prazo:** futuro financeiro (investimentos)
 
-Ligue para os credores e negocie. Eles preferem receber menos do que não receber.`,
+Cada objetivo tem um lugar diferente.`,
     tasks: [
-      'Identifique dívidas que pode quitar agora',
-      'Pesquise condições de renegociação',
-      'Faça pelo menos uma ligação de negociação',
+      'Gastos do dia a dia',
+      'Objetivos próximos',
+      'Futuro financeiro',
     ],
   },
   7: {
-    phase: 'Organização',
-    title: 'Crie regras pessoais',
+    phase: 'Mentalidade',
+    title: 'Mentalidade de Investidor',
     duration: '3 min',
-    intro: 'Regras simples evitam decisões ruins.',
-    content: `Quando você tem regras claras, não precisa gastar energia decidindo no momento. Exemplos:
+    intro: 'Investir é diferente de apostar.',
+    content: `Muita gente perde dinheiro porque não entende a diferença entre investir e apostar.
 
-• "Compras acima de R$100, espero 24h"
-• "Delivery no máximo 1x por semana"
-• "Antes de comprar: preciso ou quero?"
+**Investir:** paciência, estudo, constância
+**Apostar:** promessa rápida, ansiedade, aposta
 
-Suas regras devem ser simples e fáceis de seguir.`,
+Investidor pensa em anos. Apostador quer multiplicar em meses.`,
     tasks: [
-      'Identifique seu maior ponto fraco de gastos',
-      'Crie 3 regras pessoais de gastos',
-      'Escreva em um lugar que vai ver todo dia',
+      'Evitar promessas rápidas',
+      'Pensar no longo prazo',
+      'Priorizar constância',
     ],
   },
   8: {
-    phase: 'Construção',
-    title: 'Comece sua reserva de emergência',
+    phase: 'Mentalidade',
+    title: 'O Que São Ações',
     duration: '3 min',
-    intro: 'Reserva não é luxo, é necessidade básica.',
-    content: `A reserva de emergência te protege de imprevistos sem precisar se endividar.
+    intro: 'Ações não são um cassino.',
+    content: `Quando você compra uma ação, você vira sócio de uma empresa. Você lucra quando a empresa cresce e distribui lucros.
 
-**Meta inicial:** 1 mês de gastos essenciais
-**Meta ideal:** 6 meses de gastos essenciais
+**Não confunda:**
+Ação não é aposta. É participação em negócios reais.
 
-Comece com qualquer valor. R$50, R$100, o que der. O importante é começar.`,
+O preço varia, mas o foco é no resultado de longo prazo.`,
     tasks: [
-      'Calcule quanto são seus gastos essenciais mensais',
-      'Defina sua meta de reserva (comece com 1 mês)',
-      'Determine quanto vai guardar por mês',
+      'Ação representa participação em empresas',
+      'Preço varia',
+      'Resultados vêm no tempo',
     ],
   },
   9: {
-    phase: 'Construção',
-    title: 'Automatize suas finanças',
+    phase: 'Mentalidade',
+    title: 'O Que São ETFs',
     duration: '3 min',
-    intro: 'O que é automático, acontece.',
-    content: `Automatizar é a melhor forma de garantir que você vai seguir o plano. Configure:
+    intro: 'ETFs são forma prática de diversificação.',
+    content: `Um ETF reúne vários ativos em um só produto. Em vez de comprar 10 ações separadas, você compra um ETF que já tem essas 10 ações.
 
-• Transferência automática para reserva (logo após o salário)
-• Pagamento automático de contas fixas
-• Alerta de limite de gastos no cartão`,
+**Vantagem:**
+Você diversifica com pouco dinheiro. Reduz o risco de concentração.
+
+Facilita muito para quem está começando.`,
     tasks: [
-      'Configure transferência automática para reserva',
-      'Ative débito automático das contas fixas',
-      'Defina alerta de gastos no cartão',
+      'Um ETF reúne vários ativos',
+      'Reduz concentração',
+      'Facilita começar',
     ],
   },
   10: {
-    phase: 'Construção',
-    title: 'Crie sua rotina financeira',
+    phase: 'Mentalidade',
+    title: 'Erros Comuns de Iniciantes',
     duration: '3 min',
-    intro: '10 minutos por semana mudam tudo.',
-    content: `Uma rotina simples de revisão mantém você no controle:
+    intro: 'Aprenda com os erros dos outros.',
+    content: `A maioria dos iniciantes comete os mesmos erros. Você pode evitá-los.
 
-**Domingo (5 min):** revisar gastos da semana
-**Quarta (3 min):** verificar saldo e próximos vencimentos
-**Sexta (2 min):** planejar gastos do fim de semana`,
+**Os erros clássicos:**
+• Começar a investir sem reserva de emergência
+• Copiar dicas de "gurus" sem entender
+• Mudar de estratégia a cada notícia ruim
+
+Investimento é maratona, não sprint.`,
     tasks: [
-      'Escolha dia e horário para sua revisão semanal',
-      'Coloque lembrete no celular',
-      'Faça sua primeira revisão agora',
+      'Começar sem reserva',
+      'Copiar dicas',
+      'Mudar toda hora de estratégia',
     ],
   },
   11: {
-    phase: 'Mentalidade',
-    title: 'Entenda juros compostos',
+    phase: 'Próximos Passos',
+    title: 'Começando Pequeno e Consistente',
     duration: '3 min',
-    intro: 'Juros trabalham para você ou contra você.',
-    content: `Juros compostos são "juros sobre juros". Quando você deve, eles te afundam. Quando você investe, eles te enriquecem.
+    intro: 'Valor baixo não invalida o hábito.',
+    content: `Muita gente espera ter "dinheiro suficiente" para começar. Isso é um erro. O hábito importa mais que o valor.
 
-**Na dívida:** R$1.000 no cartão (12% ao mês) vira R$3.900 em 1 ano
-**No investimento:** R$500/mês por 20 anos (10% ao ano) vira R$380.000
+**A verdade:**
+R$100 por mês investidos com constância superam R$1.000 investidos uma vez só.
 
-A diferença entre rico e pobre muitas vezes é só entender isso.`,
+Comece com o que você tem hoje.`,
     tasks: [
-      'Calcule quanto suas dívidas custariam em 1 ano',
-      'Simule quanto teria em 10 anos investindo R$200/mês',
-      'Reflita: os juros estão trabalhando para ou contra você?',
+      'Definir valor mensal possível',
+      'Priorizar constância',
+      'Ignorar comparação com outros',
     ],
   },
   12: {
-    phase: 'Mentalidade',
-    title: 'Defina seus objetivos',
+    phase: 'Próximos Passos',
+    title: 'Organização Mensal em 15 Minutos',
     duration: '3 min',
-    intro: 'Dinheiro sem propósito some.',
-    content: `Você poupa e investe PARA alguma coisa. Pode ser:
+    intro: '10 minutos por semana mudam tudo.',
+    content: `Você não precisa gastar horas por semana cuidando do dinheiro. Uma rotina simples de 15 minutos por mês é suficiente.
 
-**Curto prazo (até 1 ano):** viagem, troca de celular
-**Médio prazo (1-5 anos):** entrada do carro, curso
-**Longo prazo (5+ anos):** casa própria, aposentadoria
+**Rotina mensal:**
+• Revisar gastos
+• Conferir sobra
+• Ajustar próximos passos
 
-Ter objetivos claros te motiva a continuar.`,
+Escolha um dia fixo e mantenha o hábito.`,
     tasks: [
-      'Defina 1 objetivo de curto prazo',
-      'Defina 1 objetivo de médio prazo',
-      'Defina 1 objetivo de longo prazo',
+      'Revisar gastos',
+      'Conferir sobra',
+      'Ajustar próximos passos',
     ],
   },
   13: {
     phase: 'Próximos Passos',
-    title: 'Conheça as opções de investimento',
+    title: 'Informação Financeira Com Critério',
     duration: '3 min',
-    intro: 'Investir não é só para ricos.',
-    content: `Com suas finanças organizadas, é hora de conhecer as opções:
+    intro: 'Excesso de informação gera paralisia.',
+    content: `Redes sociais estão cheias de "dicas de ouro" e promessas milagrosas. A maioria é ruído que só te confunde.
 
-**Renda Fixa:** CDB, Tesouro Direto, LCI/LCA (mais seguro)
-**Renda Variável:** Ações, ETFs, FIIs (mais risco, mais retorno)
+**Como filtrar:**
+• Evitar excesso de notícias
+• Priorizar fontes confiáveis
+• Não agir no calor do momento
 
-Para começar, renda fixa é o caminho. Ações vêm depois.`,
+Informação de qualidade é melhor que quantidade.`,
     tasks: [
-      'Pesquise o que é Tesouro Direto',
-      'Entenda a diferença entre CDB e poupança',
-      'Anote suas dúvidas para pesquisar depois',
+      'Evitar excesso de notícias',
+      'Priorizar fontes confiáveis',
+      'Não agir no calor do momento',
     ],
   },
   14: {
     phase: 'Próximos Passos',
-    title: 'Abra sua conta em corretora',
-    duration: '5 min',
-    intro: 'Sem conta em corretora, você não investe.',
-    content: `Banco cobra taxas altas. Corretora oferece mais opções e menores custos.
+    title: 'Quando Buscar Ajuda Profissional',
+    duration: '3 min',
+    intro: 'Reconhecer limites pessoais é inteligência.',
+    content: `Você pode aprender sozinho, mas há momentos em que ajuda profissional acelera resultados e evita erros caros.
 
-**Corretoras confiáveis:** XP, Rico, Clear, NuInvest, BTG
-Todas são reguladas pela CVM e seu dinheiro fica protegido.
+**Quando procurar apoio:**
+• Patrimônio crescente
+• Falta de tempo
+• Objetivos mais complexos
 
-Abrir conta é grátis e leva 5 minutos.`,
+Assessor de investimentos é diferente de gerente de banco.`,
     tasks: [
-      'Escolha uma corretora',
-      'Abra sua conta (é grátis)',
-      'Explore a plataforma sem investir ainda',
+      'Patrimônio crescente',
+      'Falta de tempo',
+      'Objetivos mais complexos',
     ],
   },
   15: {
     phase: 'Próximos Passos',
-    title: 'Faça seu primeiro investimento',
-    duration: '5 min',
-    intro: 'O primeiro passo é sempre o mais difícil.',
-    content: `Você chegou aqui! Agora é hora de colocar em prática.
+    title: 'Próximo Nível do Jogo Financeiro',
+    duration: '3 min',
+    intro: 'Você tem agora uma base sólida.',
+    content: `Parabéns por chegar até aqui. Você saiu do zero e construiu fundamentos que a maioria nunca tem.
 
-**Sugestão para começar:**
-Tesouro Selic - rende mais que poupança, é seguro e você pode resgatar quando quiser. Mínimo de R$30.
+**O que você conquistou:**
+• Organização vem antes do investimento
+• Constância vence pressa
+• Educação protege patrimônio
 
-Não espere ter muito dinheiro. Comece com pouco e vá aumentando.`,
+Continue evoluindo. O jogo está só começando.`,
     tasks: [
-      'Transfira um valor pequeno para a corretora',
-      'Faça seu primeiro investimento em Tesouro Selic',
-      'Celebre! Você agora é um investidor 🎉',
+      'Organização vem antes do investimento',
+      'Constância vence pressa',
+      'Educação protege patrimônio',
     ],
   },
 };
