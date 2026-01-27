@@ -15,9 +15,9 @@ const profiles = {
     highlights: [
       'Identificar e eliminar vazamentos de dinheiro',
       'Reorganizar suas dívidas de forma estratégica',
-      'Criar um plano de ação para os próximos 14 dias',
+      'Seguir os 15 passos para transformar sua situação',
     ],
-    message: 'Nos próximos 14 dias, vamos focar em organizar suas finanças e criar uma base sólida para você respirar aliviado.',
+    message: 'Nos próximos 15 passos, vamos focar em organizar suas finanças e criar uma base sólida para você respirar aliviado.',
   },
   B: {
     icon: Target,
@@ -32,7 +32,7 @@ const profiles = {
       'Definir metas financeiras claras',
       'Preparar a base para investir com segurança',
     ],
-    message: 'Nos próximos 14 dias, vamos transformar sua organização em crescimento real, preparando você para os próximos passos.',
+    message: 'Nos próximos 15 passos, vamos transformar sua organização em crescimento real, preparando você para investir.',
   },
   A: {
     icon: Rocket,
@@ -47,7 +47,7 @@ const profiles = {
       'Conhecer as melhores práticas para diversificação',
       'Criar um plano de ação personalizado',
     ],
-    message: 'Nos próximos 14 dias, vamos solidificar sua base e mostrar o caminho para investir internacionalmente com consciência.',
+    message: 'Nos próximos 15 passos, vamos solidificar sua base e mostrar o caminho para investir com consciência.',
   },
 };
 
@@ -139,7 +139,7 @@ export default function ProfileResult({ profile, userName, onStartPlan }) {
             size="lg"
             className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-900 font-semibold py-7 text-lg rounded-2xl shadow-lg shadow-amber-500/20 transition-all duration-300 hover:shadow-amber-500/30"
           >
-            Acessar plano de 14 dias
+            Acessar os 15 passos
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </motion.div>
