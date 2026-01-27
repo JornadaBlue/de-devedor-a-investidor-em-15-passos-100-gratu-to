@@ -42,23 +42,32 @@ Deno.serve(async (req) => {
                 created_by: buyerEmail
             });
             
+            let profile;
+            
             if (profiles.length === 0) {
-                console.log(`Perfil não encontrado para o email: ${buyerEmail}`);
-                return Response.json({ 
-                    message: 'Perfil não encontrado',
-                    email: buyerEmail 
-                }, { status: 404 });
+                console.log(`Perfil não encontrado para o email: ${buyerEmail}. Criando novo perfil...`);
+                
+                // Criar novo perfil para o comprador
+                const buyerName = data.buyer?.name || 'Novo Usuário';
+                profile = await base44.asServiceRole.entities.UserProfile.create({
+                    nome: buyerName,
+                    tem_plano_personalizado: true,
+                    hotmart_transaction_code: transactionCode,
+                    created_by: buyerEmail
+                });
+                
+                console.log(`Novo perfil criado e acesso concedido para: ${buyerEmail}`);
+            } else {
+                profile = profiles[0];
+                
+                // Atualizar o perfil existente para conceder acesso ao plano
+                await base44.asServiceRole.entities.UserProfile.update(profile.id, {
+                    tem_plano_personalizado: true,
+                    hotmart_transaction_code: transactionCode
+                });
+                
+                console.log(`Acesso ao plano concedido para usuário existente: ${buyerEmail}`);
             }
-            
-            const profile = profiles[0];
-            
-            // Atualizar o perfil para conceder acesso ao plano
-            await base44.asServiceRole.entities.UserProfile.update(profile.id, {
-                tem_plano_personalizado: true,
-                hotmart_transaction_code: transactionCode
-            });
-            
-            console.log(`Acesso ao plano concedido para: ${buyerEmail}`);
             
             // Opcional: Enviar email de confirmação
             // await base44.asServiceRole.integrations.Core.SendEmail({
