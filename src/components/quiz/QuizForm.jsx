@@ -70,7 +70,7 @@ const questions = [
   {
     id: 'tempo_disponivel',
     title: 'Quanto tempo você tem por dia?',
-    subtitle: 'Para se dedicar ao plano de 14 dias',
+    subtitle: 'Para se dedicar ao plano de 15 passos',
     type: 'single',
     options: [
       { value: '3min', label: '3 minutos', icon: '⚡', description: 'Correria total' },
