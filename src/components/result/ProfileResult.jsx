@@ -41,13 +41,13 @@ const profiles = {
     borderColor: 'border-emerald-200',
     title: 'Perfil Investidor Básico',
     subtitle: 'Prioridade: Otimização e Crescimento',
-    description: 'Você já tem base e investe. Agora é hora de otimizar sua estratégia e diversificar com inteligência.',
+    description: 'Você já deu um passo que muita gente ainda não deu: organizou sua vida financeira e começou a investir. Agora, o foco é sair do improviso e transformar consistência em crescimento real.\n\nUsuários com este mesmo perfil normalmente chegam aqui com uma base construída, mas ainda com dúvidas sobre diversificação, prazos e tomada de decisão. É exatamente nisso que vamos trabalhar.',
     highlights: [
-      'Organizar objetivos e prazos de investimento',
-      'Reduzir decisões impulsivas e melhorar consistência',
-      'Definir estratégia simples de diversificação',
+      'Organizar seus objetivos financeiros de curto, médio e longo prazo',
+      'Reduzir decisões impulsivas e aumentar consistência nos investimentos',
+      'Estruturar uma estratégia simples e diversificada, adequada ao seu momento de vida',
     ],
-    message: 'Nos próximos 15 passos, vamos transformar sua organização em crescimento de patrimônio com método.',
+    message: 'Pessoas que seguem esse método costumam perceber mais clareza, menos ansiedade e decisões mais racionais ao longo do tempo. Não é sobre correr mais rápido, é sobre caminhar na direção certa.\n\nNos próximos 15 passos, você vai aplicar o mesmo método que já está ajudando outros usuários a sair da organização básica e avançar para crescimento de patrimônio com disciplina.',
   },
   D: {
     icon: TrendingUp,
