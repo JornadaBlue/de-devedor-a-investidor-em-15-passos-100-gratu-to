@@ -48,8 +48,8 @@ export default function Encerramento() {
   };
 
   const handleSkipUpsell = () => {
-    // Redirecionar para área logada ou página de confirmação
-    alert('Obrigado! Você receberá seu plano personalizado em breve.');
+    // Comprar o plano personalizado sem o clube
+    handleBuyPlan();
   };
 
   if (showUpsell) {
@@ -247,10 +247,7 @@ export default function Encerramento() {
           </div>
 
           <Button
-            onClick={() => {
-              handleBuyPlan();
-              setShowUpsell(true);
-            }}
+            onClick={() => setShowUpsell(true)}
             size="lg"
             className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-900 font-semibold py-6 rounded-xl shadow-lg shadow-amber-500/20"
           >

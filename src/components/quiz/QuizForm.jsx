@@ -125,13 +125,14 @@ export default function QuizForm({ onComplete }) {
   };
 
   const handleSelect = (questionId, value) => {
-    setAnswers({ ...answers, [questionId]: value });
+    const updatedAnswers = { ...answers, [questionId]: value };
+    setAnswers(updatedAnswers);
     // Auto advance after selection
     setTimeout(() => {
       if (step < questions.length - 1) {
         setStep(step + 1);
       } else {
-        onComplete({ ...answers, [questionId]: value });
+        onComplete(updatedAnswers);
       }
     }, 300);
   };
