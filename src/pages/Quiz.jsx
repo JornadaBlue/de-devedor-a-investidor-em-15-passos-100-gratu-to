@@ -48,8 +48,8 @@ export default function Quiz() {
       data_inicio: new Date().toISOString().split('T')[0],
     });
 
-    // Navigate to result page with profile info
-    navigate(createPageUrl('Resultado') + `?id=${userProfile.id}&perfil=${profile}&nome=${encodeURIComponent(answers.nome)}`);
+    // Navigate to loading page first
+    navigate(createPageUrl('PreparandoPlano') + `?id=${userProfile.id}&perfil=${profile}&nome=${encodeURIComponent(answers.nome)}`);
   };
 
   return <QuizForm onComplete={handleComplete} />;
