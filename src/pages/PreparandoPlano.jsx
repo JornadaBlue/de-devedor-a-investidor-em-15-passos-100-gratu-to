@@ -16,8 +16,8 @@ export default function PreparandoPlano() {
 
   useEffect(() => {
     // Animar a barra de progresso
-    const duration = 3000; // 3 segundos
-    const steps = 60;
+    const duration = 5000; // 5 segundos
+    const steps = 100;
     const interval = duration / steps;
     
     let currentStep = 0;
@@ -81,7 +81,7 @@ export default function PreparandoPlano() {
           transition={{ delay: 0.4 }}
           className="w-full px-4"
         >
-          <Progress value={progress} className="h-2 bg-slate-700" />
+          <Progress value={progress} className="h-3 bg-slate-700" />
           <p className="text-slate-400 text-sm mt-3">
             Analisando suas respostas e montando sua estratégia...
           </p>
