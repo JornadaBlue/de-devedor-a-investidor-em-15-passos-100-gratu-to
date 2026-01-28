@@ -39,27 +39,31 @@ export default function Quiz() {
 
   const handleComplete = async (answers) => {
     try {
-      console.log('handleComplete chamado com:', answers);
       const profile = calculateProfile(answers);
-      console.log('Perfil calculado:', profile);
       
       // Save to database
-      console.log('Salvando no banco de dados...');
       const userProfile = await base44.entities.UserProfile.create({
-        ...answers,
+        nome: answers.nome,
+        idade: parseInt(answers.idade),
+        como_termina_mes: answers.como_termina_mes,
+        maior_dor: answers.maior_dor,
+        possui_dividas: answers.possui_dividas,
+        ja_investe: answers.ja_investe,
+        objetivo_principal: answers.objetivo_principal,
+        tempo_disponivel: answers.tempo_disponivel,
+        patrimonio_investido: answers.patrimonio_investido,
+        objetivo_longo_prazo: answers.objetivo_longo_prazo,
+        renda_mensal: answers.renda_mensal,
         perfil: profile,
         progresso: [],
         data_inicio: new Date().toISOString().split('T')[0],
       });
-      console.log('Perfil salvo:', userProfile);
 
-      // Navigate to loading page first
-      const nextUrl = createPageUrl('PreparandoPlano') + `?id=${userProfile.id}&perfil=${profile}&nome=${encodeURIComponent(answers.nome)}`;
-      console.log('Navegando para:', nextUrl);
-      navigate(nextUrl);
+      // Navigate to loading page
+      navigate(createPageUrl('PreparandoPlano') + `?id=${userProfile.id}&perfil=${profile}&nome=${encodeURIComponent(answers.nome)}`);
     } catch (error) {
-      console.error('Erro ao completar quiz:', error);
-      alert('Erro ao salvar suas respostas. Por favor, tente novamente.');
+      console.error('Erro detalhado:', error);
+      alert('Erro ao salvar suas respostas: ' + (error.message || 'Tente novamente'));
     }
   };
 
