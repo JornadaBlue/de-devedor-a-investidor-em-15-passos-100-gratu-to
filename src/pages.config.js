@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import AdminClube from './pages/AdminClube';
 import Clube from './pages/Clube';
 import Dashboard from './pages/Dashboard';
 import Encerramento from './pages/Encerramento';
@@ -55,10 +56,10 @@ import MeuPlano from './pages/MeuPlano';
 import PreparandoPlano from './pages/PreparandoPlano';
 import Quiz from './pages/Quiz';
 import Resultado from './pages/Resultado';
-import AdminClube from './pages/AdminClube';
 
 
 export const PAGES = {
+    "AdminClube": AdminClube,
     "Clube": Clube,
     "Dashboard": Dashboard,
     "Encerramento": Encerramento,
@@ -67,7 +68,6 @@ export const PAGES = {
     "PreparandoPlano": PreparandoPlano,
     "Quiz": Quiz,
     "Resultado": Resultado,
-    "AdminClube": AdminClube,
 }
 
 export const pagesConfig = {

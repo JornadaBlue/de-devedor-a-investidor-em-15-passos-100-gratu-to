@@ -76,8 +76,8 @@ export default function Dashboard() {
   const currentStep = completedSteps.length + 1;
   const progress = (completedSteps.length / 15) * 100;
 
-  const handleCompleteStep = (step) => {
-    updateProgressMutation.mutate(step);
+  const handleCompleteStep = async (step) => {
+    await updateProgressMutation.mutateAsync(step);
     setSelectedStep(null);
   };
 
