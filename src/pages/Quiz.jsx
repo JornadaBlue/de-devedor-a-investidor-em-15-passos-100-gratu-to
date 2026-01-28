@@ -50,7 +50,7 @@ export default function Quiz() {
         possui_dividas: answers.possui_dividas,
         ja_investe: answers.ja_investe,
         objetivo_principal: answers.objetivo_principal,
-        tempo_disponivel: answers.tempo_disponivel,
+        comprometimento: answers.comprometimento,
         patrimonio_investido: answers.patrimonio_investido,
         objetivo_longo_prazo: answers.objetivo_longo_prazo,
         renda_mensal: answers.renda_mensal,
