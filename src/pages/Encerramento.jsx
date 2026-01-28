@@ -42,8 +42,8 @@ export default function Encerramento() {
   };
 
   const handleBuyUpsell = () => {
-    // Aqui vai a integração com Stripe (subscription)
-    alert('Integração com Stripe será configurada. Assinatura: R$27/mês');
+    // Redirecionar para checkout Hotmart do Clube
+    window.location.href = 'https://pay.hotmart.com/A104123950F';
   };
 
   const handleSkipUpsell = () => {
