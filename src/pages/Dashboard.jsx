@@ -54,21 +54,41 @@ export default function Dashboard() {
 
   const updateProgressMutation = useMutation({
     mutationFn: async (step) => {
-      if (!profile) return;
+      console.log('🔵 Completando passo:', step);
+      console.log('📋 Profile:', profile);
+      
+      if (!profile) {
+        console.error('❌ Profile não encontrado');
+        return;
+      }
+      
       const newProgress = [...(profile.progresso || [])];
+      console.log('📊 Progresso atual:', newProgress);
+      
       if (!newProgress.includes(step)) {
         newProgress.push(step);
+        console.log('✅ Adicionando passo', step, '- novo progresso:', newProgress);
+      } else {
+        console.log('⚠️ Passo', step, 'já estava no progresso');
       }
+      
+      console.log('💾 Salvando no banco...');
       await base44.entities.UserProfile.update(profile.id, { progresso: newProgress });
+      console.log('✅ Salvo com sucesso!');
+      
       return newProgress;
     },
     onSuccess: (newProgress) => {
+      console.log('🎉 Mutation success! Novo progresso:', newProgress);
       queryClient.invalidateQueries({ queryKey: ['userProfile', profileId] });
       
       // Se completou todos os 15 passos, vai para encerramento
       if (newProgress && newProgress.length >= 15) {
         navigate(createPageUrl('Encerramento') + `?id=${profileId}&nome=${encodeURIComponent(profile?.nome || 'Usuário')}`);
       }
+    },
+    onError: (error) => {
+      console.error('❌ Erro ao salvar progresso:', error);
     },
   });
 
