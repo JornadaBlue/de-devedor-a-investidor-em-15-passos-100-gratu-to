@@ -85,9 +85,9 @@ const questions = [
     type: 'single',
     options: [
       { value: 'nada', label: 'Nada ainda', icon: '🌱', description: 'Não tenho investimentos' },
-      { value: 'ate_10k', label: 'Até R$ 10 mil', icon: '💵', description: 'Estou começando' },
-      { value: '10k_50k', label: 'R$ 10 mil a R$ 50 mil', icon: '💰', description: 'Já tenho uma base' },
-      { value: 'acima_50k', label: 'Acima de R$ 50 mil', icon: '💎', description: 'Patrimônio consolidado' },
+      { value: 'ate_100k', label: 'Até R$ 100 mil', icon: '💵', description: 'Já construí minha reserva de emergência' },
+      { value: '100k_299k', label: 'R$ 100 mil a R$ 299 mil', icon: '💰', description: 'Já tenho uma base' },
+      { value: 'acima_300k', label: 'Acima de R$ 300 mil', icon: '💎', description: 'Investidos em banco ou corretora' },
     ],
   },
   {
@@ -166,14 +166,21 @@ export default function QuizForm({ onComplete }) {
   const handleSelect = (questionId, value) => {
     const updatedAnswers = { ...answers, [questionId]: value };
     setAnswers(updatedAnswers);
-    // Auto advance after selection
-    setTimeout(() => {
-      if (step < questions.length - 1) {
-        setStep(step + 1);
-      } else {
+    
+    // Check if this is the last question
+    const isLastQuestion = step === questions.length - 1;
+    
+    if (isLastQuestion) {
+      // Call onComplete immediately for the last question
+      setTimeout(() => {
         onComplete(updatedAnswers);
-      }
-    }, 300);
+      }, 300);
+    } else {
+      // Auto advance to next question
+      setTimeout(() => {
+        setStep(step + 1);
+      }, 300);
+    }
   };
 
   const canProceed = () => {
