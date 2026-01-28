@@ -163,29 +163,19 @@ export default function QuizForm({ onComplete }) {
     if (step > 0) setStep(step - 1);
   };
 
-  const handleSelect = async (questionId, value) => {
+  const handleSelect = (questionId, value) => {
     const updatedAnswers = { ...answers, [questionId]: value };
     setAnswers(updatedAnswers);
     
-    // Check if this is the last question
-    const isLastQuestion = step === questions.length - 1;
-    
-    console.log('Questão selecionada:', questionId, 'Valor:', value);
-    console.log('É última questão?', isLastQuestion);
-    console.log('Step atual:', step, 'Total de questões:', questions.length);
-    
-    if (isLastQuestion) {
-      // Call onComplete for the last question
-      console.log('Finalizando quiz com respostas:', updatedAnswers);
-      setTimeout(async () => {
-        await onComplete(updatedAnswers);
-      }, 300);
-    } else {
-      // Auto advance to next question
-      setTimeout(() => {
+    // Auto advance or complete
+    setTimeout(() => {
+      if (step < questions.length - 1) {
         setStep(step + 1);
-      }, 300);
-    }
+      } else {
+        // É a última pergunta - finalizar quiz
+        onComplete(updatedAnswers);
+      }
+    }, 300);
   };
 
   const canProceed = () => {
