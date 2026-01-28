@@ -69,14 +69,14 @@ export default function Dashboard() {
         progresso: newProgress 
       });
       
-      return newProgress;
+      return { newProgress, profileId: profile.id };
     },
-    onSuccess: async (newProgress) => {
-      // Invalida e espera refetch
-      await queryClient.invalidateQueries({ queryKey: ['userProfile', profileId] });
+    onSuccess: async (data) => {
+      // Refetch explícito
+      await queryClient.refetchQueries({ queryKey: ['userProfile', profileId] });
       
       // Se completou todos os 15 passos, vai para encerramento
-      if (newProgress && newProgress.length >= 15) {
+      if (data.newProgress && data.newProgress.length >= 15) {
         navigate(createPageUrl('Encerramento') + `?id=${profileId}&nome=${encodeURIComponent(profile?.nome || 'Usuário')}`);
       }
     },
@@ -90,8 +90,15 @@ export default function Dashboard() {
   const progress = (completedSteps.length / 15) * 100;
 
   const handleCompleteStep = async (step) => {
-    await updateProgressMutation.mutateAsync(step);
-    setSelectedStep(null);
+    try {
+      await updateProgressMutation.mutateAsync(step);
+      // Espera um pouco para garantir que o refetch aconteceu
+      setTimeout(() => {
+        setSelectedStep(null);
+      }, 500);
+    } catch (error) {
+      console.error('Erro ao completar passo:', error);
+    }
   };
 
   if (isLoading) {
