@@ -78,6 +78,42 @@ const questions = [
       { value: '10min', label: '10 minutos', icon: '🧘', description: 'Tenho disponibilidade' },
     ],
   },
+  {
+    id: 'patrimonio_investido',
+    title: 'Quanto você tem investido hoje?',
+    subtitle: 'Considere investimentos, poupança, previdência',
+    type: 'single',
+    options: [
+      { value: 'nada', label: 'Nada ainda', icon: '🌱', description: 'Não tenho investimentos' },
+      { value: 'ate_10k', label: 'Até R$ 10 mil', icon: '💵', description: 'Estou começando' },
+      { value: '10k_50k', label: 'R$ 10 mil a R$ 50 mil', icon: '💰', description: 'Já tenho uma base' },
+      { value: 'acima_50k', label: 'Acima de R$ 50 mil', icon: '💎', description: 'Patrimônio consolidado' },
+    ],
+  },
+  {
+    id: 'objetivo_longo_prazo',
+    title: 'Qual seu objetivo de longo prazo?',
+    subtitle: 'Pense em 5 a 10 anos',
+    type: 'single',
+    options: [
+      { value: 'aposentadoria', label: 'Aposentadoria tranquila', icon: '🏖️', description: 'Viver bem no futuro' },
+      { value: 'liberdade', label: 'Liberdade financeira', icon: '🦅', description: 'Viver de renda' },
+      { value: 'casa', label: 'Comprar imóvel', icon: '🏡', description: 'Casa própria ou investimento' },
+      { value: 'educacao', label: 'Educação dos filhos', icon: '🎓', description: 'Garantir o futuro da família' },
+    ],
+  },
+  {
+    id: 'renda_mensal',
+    title: 'Qual sua faixa de renda mensal?',
+    subtitle: 'Nos ajuda a personalizar melhor seu plano',
+    type: 'single',
+    options: [
+      { value: 'ate_3k', label: 'Até R$ 3 mil', icon: '💵', description: 'Renda básica' },
+      { value: '3k_7k', label: 'R$ 3 mil a R$ 7 mil', icon: '💰', description: 'Renda média' },
+      { value: '7k_15k', label: 'R$ 7 mil a R$ 15 mil', icon: '💎', description: 'Renda alta' },
+      { value: 'acima_15k', label: 'Acima de R$ 15 mil', icon: '👑', description: 'Renda premium' },
+    ],
+  },
 ];
 
 export default function QuizForm({ onComplete }) {
@@ -91,6 +127,9 @@ export default function QuizForm({ onComplete }) {
     ja_investe: '',
     objetivo_principal: '',
     tempo_disponivel: '',
+    patrimonio_investido: '',
+    objetivo_longo_prazo: '',
+    renda_mensal: '',
   });
   const [errors, setErrors] = useState({});
 
