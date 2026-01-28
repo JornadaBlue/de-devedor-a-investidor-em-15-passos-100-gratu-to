@@ -164,19 +164,21 @@ export default function QuizForm({ onComplete }) {
     if (step > 0) setStep(step - 1);
   };
 
-  const handleSelect = async (questionId, value) => {
+  const handleSelect = (questionId, value) => {
     const updatedAnswers = { ...answers, [questionId]: value };
     setAnswers(updatedAnswers);
     
     // Auto advance or complete
-    setTimeout(async () => {
-      if (step < questions.length - 1) {
+    if (step < questions.length - 1) {
+      setTimeout(() => {
         setStep(step + 1);
-      } else {
-        // É a última pergunta - finalizar quiz
-        await onComplete(updatedAnswers);
-      }
-    }, 300);
+      }, 300);
+    } else {
+      // É a última pergunta - finalizar quiz imediatamente
+      setTimeout(() => {
+        onComplete(updatedAnswers);
+      }, 300);
+    }
   };
 
   const canProceed = () => {
