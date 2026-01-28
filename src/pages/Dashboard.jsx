@@ -54,26 +54,34 @@ export default function Dashboard() {
 
   const updateProgressMutation = useMutation({
     mutationFn: async (step) => {
-      if (!profile) return null;
+      if (!profile || !profile.id) {
+        throw new Error('Profile não encontrado');
+      }
       
-      const newProgress = [...(profile.progresso || [])];
+      const currentProgress = profile.progresso || [];
+      const newProgress = [...currentProgress];
+      
       if (!newProgress.includes(step)) {
         newProgress.push(step);
       }
       
-      await base44.entities.UserProfile.update(profile.id, { progresso: newProgress });
+      await base44.entities.UserProfile.update(profile.id, { 
+        progresso: newProgress 
+      });
       
-      // Refetch para obter o perfil atualizado
-      const updatedProfiles = await base44.entities.UserProfile.filter({ id: profileId });
-      return updatedProfiles[0]?.progresso || newProgress;
+      return newProgress;
     },
-    onSuccess: (newProgress) => {
-      queryClient.invalidateQueries({ queryKey: ['userProfile', profileId] });
+    onSuccess: async (newProgress) => {
+      // Invalida e espera refetch
+      await queryClient.invalidateQueries({ queryKey: ['userProfile', profileId] });
       
       // Se completou todos os 15 passos, vai para encerramento
       if (newProgress && newProgress.length >= 15) {
         navigate(createPageUrl('Encerramento') + `?id=${profileId}&nome=${encodeURIComponent(profile?.nome || 'Usuário')}`);
       }
+    },
+    onError: (error) => {
+      console.error('Erro ao atualizar progresso:', error);
     },
   });
 
