@@ -38,18 +38,29 @@ export default function Quiz() {
   };
 
   const handleComplete = async (answers) => {
-    const profile = calculateProfile(answers);
-    
-    // Save to database
-    const userProfile = await base44.entities.UserProfile.create({
-      ...answers,
-      perfil: profile,
-      progresso: [],
-      data_inicio: new Date().toISOString().split('T')[0],
-    });
+    try {
+      console.log('handleComplete chamado com:', answers);
+      const profile = calculateProfile(answers);
+      console.log('Perfil calculado:', profile);
+      
+      // Save to database
+      console.log('Salvando no banco de dados...');
+      const userProfile = await base44.entities.UserProfile.create({
+        ...answers,
+        perfil: profile,
+        progresso: [],
+        data_inicio: new Date().toISOString().split('T')[0],
+      });
+      console.log('Perfil salvo:', userProfile);
 
-    // Navigate to loading page first
-    navigate(createPageUrl('PreparandoPlano') + `?id=${userProfile.id}&perfil=${profile}&nome=${encodeURIComponent(answers.nome)}`);
+      // Navigate to loading page first
+      const nextUrl = createPageUrl('PreparandoPlano') + `?id=${userProfile.id}&perfil=${profile}&nome=${encodeURIComponent(answers.nome)}`;
+      console.log('Navegando para:', nextUrl);
+      navigate(nextUrl);
+    } catch (error) {
+      console.error('Erro ao completar quiz:', error);
+      alert('Erro ao salvar suas respostas. Por favor, tente novamente.');
+    }
   };
 
   return <QuizForm onComplete={handleComplete} />;
