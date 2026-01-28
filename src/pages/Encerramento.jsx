@@ -34,7 +34,6 @@ export default function Encerramento() {
     { icon: FileText, text: 'Conteúdos educativos para apoiar decisões de investimento ao longo do tempo' },
     { icon: Users, text: 'Comunidade exclusiva de investidores para troca de experiências' },
     { icon: Star, text: 'Acesso direto às análises produzidas por profissionais da Blue3 Investimentos' },
-    { icon: Clock, text: 'Suporte prioritário para dúvidas relacionadas aos conteúdos do clube' },
   ];
 
   const handleBuyPlan = () => {
