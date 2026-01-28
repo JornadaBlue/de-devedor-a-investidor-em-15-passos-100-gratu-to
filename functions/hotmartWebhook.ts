@@ -29,13 +29,18 @@ Deno.serve(async (req) => {
         if (event === 'PURCHASE_APPROVED' || event === 'PURCHASE_COMPLETE') {
             const buyerEmail = data.buyer?.email;
             const transactionCode = data.purchase?.transaction;
+            const productId = data.product?.id;
             
             if (!buyerEmail) {
                 console.log('Email do comprador não encontrado no webhook');
                 return Response.json({ message: 'Email não encontrado' }, { status: 400 });
             }
             
-            console.log(`Processando compra aprovada para: ${buyerEmail}`);
+            console.log(`Processando compra aprovada para: ${buyerEmail}, Produto: ${productId}`);
+            
+            // Determinar se é clube (ID 7089793) ou plano personalizado (ID 7087932)
+            const isClube = productId === 7089793;
+            const isPlanoPersonalizado = productId === 7087932;
             
             // Buscar o perfil do usuário pelo email usando service role
             const profiles = await base44.asServiceRole.entities.UserProfile.filter({
@@ -43,6 +48,17 @@ Deno.serve(async (req) => {
             });
             
             let profile;
+            const updateData = {};
+            
+            if (isClube) {
+                updateData.eh_membro_clube = true;
+                updateData.hotmart_clube_transaction_code = transactionCode;
+            }
+            
+            if (isPlanoPersonalizado) {
+                updateData.tem_plano_personalizado = true;
+                updateData.hotmart_transaction_code = transactionCode;
+            }
             
             if (profiles.length === 0) {
                 console.log(`Perfil não encontrado para o email: ${buyerEmail}. Criando novo perfil...`);
@@ -51,8 +67,7 @@ Deno.serve(async (req) => {
                 const buyerName = data.buyer?.name || 'Novo Usuário';
                 profile = await base44.asServiceRole.entities.UserProfile.create({
                     nome: buyerName,
-                    tem_plano_personalizado: true,
-                    hotmart_transaction_code: transactionCode,
+                    ...updateData,
                     created_by: buyerEmail
                 });
                 
@@ -60,13 +75,10 @@ Deno.serve(async (req) => {
             } else {
                 profile = profiles[0];
                 
-                // Atualizar o perfil existente para conceder acesso ao plano
-                await base44.asServiceRole.entities.UserProfile.update(profile.id, {
-                    tem_plano_personalizado: true,
-                    hotmart_transaction_code: transactionCode
-                });
+                // Atualizar o perfil existente
+                await base44.asServiceRole.entities.UserProfile.update(profile.id, updateData);
                 
-                console.log(`Acesso ao plano concedido para usuário existente: ${buyerEmail}`);
+                console.log(`Acesso concedido para usuário existente: ${buyerEmail}`);
             }
             
             // Opcional: Enviar email de confirmação
@@ -84,8 +96,9 @@ Deno.serve(async (req) => {
         }
         
         // Outros eventos (reembolso, cancelamento, etc.)
-        if (event === 'PURCHASE_REFUNDED' || event === 'PURCHASE_CANCELED') {
+        if (event === 'PURCHASE_REFUNDED' || event === 'PURCHASE_CANCELED' || event === 'SUBSCRIPTION_CANCELLATION') {
             const buyerEmail = data.buyer?.email;
+            const productId = data.product?.id;
             
             if (buyerEmail) {
                 const profiles = await base44.asServiceRole.entities.UserProfile.filter({
@@ -93,9 +106,21 @@ Deno.serve(async (req) => {
                 });
                 
                 if (profiles.length > 0) {
-                    await base44.asServiceRole.entities.UserProfile.update(profiles[0].id, {
-                        tem_plano_personalizado: false
-                    });
+                    const updateData = {};
+                    
+                    // Determinar qual acesso remover
+                    const isClube = productId === 7089793;
+                    const isPlanoPersonalizado = productId === 7087932;
+                    
+                    if (isClube) {
+                        updateData.eh_membro_clube = false;
+                    }
+                    
+                    if (isPlanoPersonalizado) {
+                        updateData.tem_plano_personalizado = false;
+                    }
+                    
+                    await base44.asServiceRole.entities.UserProfile.update(profiles[0].id, updateData);
                     console.log(`Acesso removido para: ${buyerEmail}`);
                 }
             }
