@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, AlertTriangle, Target, Rocket, CheckCircle } from 'lucide-react';
+import { ArrowRight, AlertTriangle, Target, Rocket, CheckCircle, TrendingUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const profiles = {
@@ -39,15 +39,45 @@ const profiles = {
     iconColor: 'text-emerald-500',
     bgColor: 'bg-emerald-50',
     borderColor: 'border-emerald-200',
-    title: 'Perfil Base Pronta',
-    subtitle: 'Prioridade: Começar a Investir',
-    description: 'Você já tem base. Agora é hora de começar a investir em ações e ETFs no Brasil.',
+    title: 'Perfil Investidor Básico',
+    subtitle: 'Prioridade: Otimização e Crescimento',
+    description: 'Você já tem base e investe. Agora é hora de otimizar sua estratégia e diversificar com inteligência.',
     highlights: [
-      'Entender o cenário de investimentos no Brasil',
-      'Conhecer as melhores práticas para diversificação',
-      'Criar um plano de ação personalizado',
+      'Organizar objetivos e prazos de investimento',
+      'Reduzir decisões impulsivas e melhorar consistência',
+      'Definir estratégia simples de diversificação',
     ],
-    message: 'Nos próximos 15 passos, vamos solidificar sua base e mostrar o caminho para investir em ações e ETFs.',
+    message: 'Nos próximos 15 passos, vamos transformar sua organização em crescimento de patrimônio com método.',
+  },
+  D: {
+    icon: TrendingUp,
+    iconColor: 'text-purple-500',
+    bgColor: 'bg-purple-50',
+    borderColor: 'border-purple-200',
+    title: 'Perfil Organizado sem Sobra',
+    subtitle: 'Prioridade: Criar Sobra Mensal',
+    description: 'Você não está endividado, mas seu dinheiro entra e some. Falta método para criar sobra.',
+    highlights: [
+      'Entender exatamente para onde o dinheiro vai',
+      'Criar a primeira sobra mensal real',
+      'Organizar a base para começar a investir',
+    ],
+    message: 'Nos próximos 15 passos, vamos criar método para você comandar o dinheiro que já ganha.',
+  },
+  E: {
+    icon: Zap,
+    iconColor: 'text-amber-500',
+    bgColor: 'bg-amber-50',
+    borderColor: 'border-amber-200',
+    title: 'Perfil Investidor Ansioso',
+    subtitle: 'Prioridade: Disciplina e Consistência',
+    description: 'Você já investe, mas troca de estratégia com frequência e fica muito exposto ao noticiário.',
+    highlights: [
+      'Reduzir ruído e ansiedade nas decisões',
+      'Criar regras claras para investir',
+      'Parar de tomar decisões emocionais',
+    ],
+    message: 'Nos próximos 15 passos, vamos criar disciplina para você confiar em uma estratégia consistente.',
   },
 };
 
