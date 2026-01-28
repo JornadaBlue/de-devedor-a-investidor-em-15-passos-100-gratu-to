@@ -30,10 +30,11 @@ export default function Encerramento() {
   ];
 
   const upsellFeatures = [
-    { icon: TrendingUp, text: 'Recomendações de ações e ETFs todo 5º dia útil' },
-    { icon: Users, text: 'Comunidade exclusiva de investidores' },
-    { icon: Star, text: 'Análises feitas por profissionais da Blue3 Investimentos' },
-    { icon: Clock, text: 'Suporte prioritário para dúvidas' },
+    { icon: TrendingUp, text: 'Análises mensais de ações e ETFs, com linguagem clara e objetiva' },
+    { icon: FileText, text: 'Conteúdos educativos para apoiar decisões de investimento ao longo do tempo' },
+    { icon: Users, text: 'Comunidade exclusiva de investidores para troca de experiências' },
+    { icon: Star, text: 'Acesso direto às análises produzidas por profissionais da Blue3 Investimentos' },
+    { icon: Clock, text: 'Suporte prioritário para dúvidas relacionadas aos conteúdos do clube' },
   ];
 
   const handleBuyPlan = () => {
@@ -57,62 +58,91 @@ export default function Encerramento() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-lg"
+          className="w-full max-w-2xl"
         >
           <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full mb-4">
               <Gift className="w-4 h-4 text-amber-400" />
-              <span className="text-amber-300 text-sm font-medium">Oferta Especial</span>
+              <span className="text-amber-300 text-sm font-medium">Próximo Nível</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-              Quer acelerar seus resultados?
+              Clube Devedor a Investidor
             </h1>
             <p className="text-slate-400">
-              Receba recomendações de um profissional certificado
+              Acompanhamento contínuo para quem quer evoluir com método
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl p-6 shadow-2xl mb-4">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-3xl p-8 shadow-2xl mb-4">
+            <div className="flex items-center justify-between mb-6 pb-6 border-b border-slate-100">
               <div>
-                <p className="text-sm text-slate-500">Assinatura mensal</p>
+                <p className="text-sm text-slate-500 mb-1">Assinatura mensal</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-slate-900">R$27</span>
+                  <span className="text-4xl font-bold text-slate-900">R$27</span>
                   <span className="text-slate-500">/mês</span>
                 </div>
               </div>
               <div className="text-right">
-                <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">
+                <span className="px-3 py-1.5 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">
                   Blue3 Investimentos
                 </span>
               </div>
             </div>
 
-            <div className="space-y-3 mb-6">
-              {upsellFeatures.map((feature, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                    <feature.icon className="w-4 h-4 text-blue-600" />
-                  </div>
-                  <span className="text-sm text-slate-700">{feature.text}</span>
-                </div>
-              ))}
+            <p className="text-slate-700 mb-6 leading-relaxed">
+              O Clube Devedor a Investidor é uma assinatura mensal criada para quem já deu o primeiro passo na organização financeira e quer evoluir com <strong>método, clareza e disciplina</strong>.
+            </p>
+
+            <div className="p-4 bg-slate-50 rounded-xl mb-6 border border-slate-100">
+              <p className="text-sm text-slate-700 leading-relaxed">
+                O foco não é especulação nem promessas de ganho rápido. <strong>O foco é processo, constância e decisões mais conscientes ao longo do tempo.</strong>
+              </p>
             </div>
 
-            <div className="p-4 bg-blue-50 rounded-xl mb-6">
-              <p className="text-sm text-blue-800">
-                <strong>Todo 5º dia útil</strong> você recebe por email as recomendações de ações e ETFs analisadas pela equipe da Blue3, escritório de assessoria do qual sou sócio.
+            <div className="mb-6">
+              <p className="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wide">
+                O que está incluído:
+              </p>
+              <div className="space-y-3">
+                {upsellFeatures.map((feature, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0 mt-0.5">
+                      <feature.icon className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-sm text-slate-700 leading-relaxed">{feature.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-5 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl mb-6 border border-blue-100">
+              <p className="text-sm font-semibold text-slate-900 mb-2">Para quem é o clube:</p>
+              <ul className="text-sm text-slate-700 space-y-1.5">
+                <li>• Quem saiu ou está saindo das dívidas e quer investir com consciência</li>
+                <li>• Quem organiza melhor o dinheiro, mas sente insegurança ao investir sozinho</li>
+                <li>• Quem prefere método e disciplina em vez de apostas e modismos</li>
+              </ul>
+            </div>
+
+            <div className="p-4 bg-slate-900 rounded-xl mb-6 border border-slate-700">
+              <p className="text-sm text-slate-300 leading-relaxed italic">
+                "O Clube Devedor a Investidor não é sobre enriquecer rápido.<br/>
+                É sobre sair do caos financeiro, ganhar clareza e construir patrimônio com consistência."
               </p>
             </div>
 
             <Button
               onClick={handleBuyUpsell}
               size="lg"
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold py-6 rounded-xl shadow-lg"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold py-6 rounded-xl shadow-lg mb-3"
             >
-              Quero receber as recomendações
+              Entrar no clube por R$27/mês
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
+
+            <p className="text-center text-xs text-slate-400">
+              Cancele quando quiser • Sem fidelidade
+            </p>
           </div>
 
           <button
