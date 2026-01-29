@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FileText, Lock, ArrowLeft, CheckCircle2, Circle, 
   Target, TrendingUp, Calendar, Award, Lightbulb,
-  ChevronRight, ChevronDown
+  ChevronRight, ChevronDown, Sparkles, AlertCircle, BookOpen,
+  Zap, Star, Info
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -112,7 +113,6 @@ export default function MeuPlano() {
           animate={{ opacity: 1, y: 0 }}
           className="relative mb-8"
         >
-          {/* Background decoration */}
           <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 rounded-3xl blur-3xl -z-10" />
           
           <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
@@ -145,7 +145,7 @@ export default function MeuPlano() {
           </div>
         </motion.div>
 
-        {/* Content - Passa o plano para o componente */}
+        {/* Content */}
         <PlanContent plano={plano} userProfile={userProfile} />
 
         {/* Footer */}
@@ -175,207 +175,361 @@ export default function MeuPlano() {
   );
 }
 
-// Componente para renderizar o conteúdo do plano de forma visual
+// Componente para renderizar o conteúdo estruturado do plano
 function PlanContent({ plano, userProfile }) {
-  const [expandedSections, setExpandedSections] = useState({});
-  const [checkedItems, setCheckedItems] = useState({});
+  const [expandedModules, setExpandedModules] = useState({});
+  const [completedMissions, setCompletedMissions] = useState({});
 
-  const toggleSection = (index) => {
-    setExpandedSections(prev => ({
+  const toggleModule = (index) => {
+    setExpandedModules(prev => ({
       ...prev,
       [index]: !prev[index]
     }));
   };
 
-  const toggleCheckItem = (sectionIndex, itemIndex) => {
-    const key = `${sectionIndex}-${itemIndex}`;
-    setCheckedItems(prev => ({
+  const toggleMission = (key) => {
+    setCompletedMissions(prev => ({
       ...prev,
       [key]: !prev[key]
     }));
   };
 
-  // Parse do markdown para estrutura visual
-  const parseContent = (markdown) => {
-    const lines = markdown.split('\n');
-    const sections = [];
-    let currentSection = null;
-    let currentSubsection = null;
-
-    lines.forEach(line => {
-      if (line.startsWith('## ')) {
-        if (currentSection) sections.push(currentSection);
-        currentSection = {
-          title: line.replace('## ', ''),
-          type: 'section',
-          content: [],
-          subsections: []
-        };
-      } else if (line.startsWith('### ')) {
-        if (currentSubsection) currentSection.subsections.push(currentSubsection);
-        currentSubsection = {
-          title: line.replace('### ', ''),
-          items: []
-        };
-      } else if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
-        const item = line.trim().substring(2);
-        if (currentSubsection) {
-          currentSubsection.items.push(item);
-        } else if (currentSection) {
-          currentSection.content.push({ type: 'list', text: item });
-        }
-      } else if (line.trim() && !line.startsWith('#')) {
-        if (currentSubsection) {
-          currentSubsection.items.push({ type: 'text', text: line.trim() });
-        } else if (currentSection) {
-          currentSection.content.push({ type: 'text', text: line.trim() });
-        }
-      }
-    });
-
-    if (currentSubsection) currentSection.subsections.push(currentSubsection);
-    if (currentSection) sections.push(currentSection);
-
-    return sections;
-  };
-
-  const sections = parseContent(plano.conteudo_markdown);
-
-  const getSectionIcon = (index) => {
-    const icons = [Target, TrendingUp, Calendar, Lightbulb, CheckCircle2, Award];
-    const Icon = icons[index % icons.length];
-    return Icon;
-  };
-
-  const getSectionColor = (index) => {
-    const colors = [
-      'from-blue-500 to-blue-600',
-      'from-purple-500 to-purple-600',
-      'from-emerald-500 to-emerald-600',
-      'from-amber-500 to-amber-600',
-      'from-pink-500 to-pink-600',
-      'from-indigo-500 to-indigo-600'
-    ];
-    return colors[index % colors.length];
-  };
-
-  return (
-    <div className="space-y-6">
-      {sections.map((section, sectionIndex) => {
-        const Icon = getSectionIcon(sectionIndex);
-        const isExpanded = expandedSections[sectionIndex] !== false;
-
-        return (
+  // Se o plano tem estrutura nova (JSON)
+  if (plano.boas_vindas || plano.modulos) {
+    return (
+      <div className="space-y-8">
+        {/* Boas-vindas */}
+        {plano.boas_vindas && (
           <motion.div
-            key={sectionIndex}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: sectionIndex * 0.1 }}
-            className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden"
+            className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 border border-amber-200"
           >
-            {/* Section Header */}
-            <button
-              onClick={() => toggleSection(sectionIndex)}
-              className="w-full p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors"
-            >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${getSectionColor(sectionIndex)} flex items-center justify-center shrink-0 shadow-lg`}>
-                <Icon className="w-6 h-6 text-white" />
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-amber-500 flex items-center justify-center shrink-0">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
-              
-              <div className="flex-1 text-left">
-                <h2 className="text-xl font-bold text-slate-900">{section.title}</h2>
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-2">
+                  {plano.boas_vindas.titulo || 'Bem-vindo à sua jornada'}
+                </h2>
+                <p className="text-slate-700 leading-relaxed whitespace-pre-line">
+                  {plano.boas_vindas.texto}
+                </p>
               </div>
-              
-              <motion.div
-                animate={{ rotate: isExpanded ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ChevronDown className="w-6 h-6 text-slate-400" />
-              </motion.div>
-            </button>
-
-            {/* Section Content */}
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="border-t border-slate-100"
-                >
-                  <div className="p-6 space-y-4">
-                    {/* Content paragraphs */}
-                    {section.content.map((item, idx) => (
-                      <div key={idx}>
-                        {item.type === 'text' && (
-                          <p className="text-slate-700 leading-relaxed">{item.text}</p>
-                        )}
-                        {item.type === 'list' && (
-                          <div className="flex items-start gap-3 ml-4">
-                            <ChevronRight className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                            <p className="text-slate-700">{item.text}</p>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-
-                    {/* Subsections */}
-                    {section.subsections.length > 0 && (
-                      <div className="space-y-4 mt-6">
-                        {section.subsections.map((subsection, subIdx) => (
-                          <div key={subIdx} className="bg-slate-50 rounded-xl p-5 border border-slate-200">
-                            <h3 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
-                              <div className="w-2 h-2 rounded-full bg-amber-500" />
-                              {subsection.title}
-                            </h3>
-                            <div className="space-y-2">
-                              {subsection.items.map((item, itemIdx) => {
-                                const checkKey = `${sectionIndex}-${subIdx}-${itemIdx}`;
-                                const isChecked = checkedItems[checkKey];
-                                const itemText = typeof item === 'string' ? item : item.text;
-
-                                return (
-                                  <motion.button
-                                    key={itemIdx}
-                                    onClick={() => toggleCheckItem(sectionIndex, `${subIdx}-${itemIdx}`)}
-                                    whileHover={{ scale: 1.01 }}
-                                    whileTap={{ scale: 0.99 }}
-                                    className={`w-full flex items-start gap-3 p-3 rounded-lg transition-all ${
-                                      isChecked 
-                                        ? 'bg-emerald-50 border-2 border-emerald-200' 
-                                        : 'bg-white border-2 border-slate-200 hover:border-slate-300'
-                                    }`}
-                                  >
-                                    <div className={`w-5 h-5 rounded-full shrink-0 mt-0.5 flex items-center justify-center ${
-                                      isChecked 
-                                        ? 'bg-emerald-500' 
-                                        : 'border-2 border-slate-300'
-                                    }`}>
-                                      {isChecked && <CheckCircle2 className="w-4 h-4 text-white" />}
-                                    </div>
-                                    <span className={`text-left text-sm ${
-                                      isChecked 
-                                        ? 'text-slate-500 line-through' 
-                                        : 'text-slate-700'
-                                    }`}>
-                                      {itemText}
-                                    </span>
-                                  </motion.button>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+            </div>
+            
+            {plano.boas_vindas.diagnostico && (
+              <div className="mt-6 p-4 bg-white/70 rounded-xl border border-amber-300">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-amber-900 mb-1">Seu Diagnóstico</p>
+                    <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                      {plano.boas_vindas.diagnostico}
+                    </p>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </div>
+              </div>
+            )}
           </motion.div>
-        );
-      })}
+        )}
+
+        {/* Módulos */}
+        {plano.modulos?.map((modulo, modIndex) => {
+          const isExpanded = expandedModules[modIndex] !== false;
+          const IconComponent = getIconComponent(modulo.icone);
+          
+          return (
+            <motion.div
+              key={modIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: modIndex * 0.1 }}
+              className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden"
+            >
+              {/* Module Header */}
+              <button
+                onClick={() => toggleModule(modIndex)}
+                className="w-full p-6 flex items-center gap-4 hover:bg-slate-50 transition-colors"
+              >
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${modulo.cor || 'from-blue-500 to-blue-600'} flex items-center justify-center shrink-0 shadow-lg`}>
+                  <IconComponent className="w-6 h-6 text-white" />
+                </div>
+                
+                <div className="flex-1 text-left">
+                  <h2 className="text-xl font-bold text-slate-900">{modulo.titulo}</h2>
+                  {modulo.situacao_problema && (
+                    <p className="text-sm text-slate-600 mt-1">{modulo.situacao_problema}</p>
+                  )}
+                </div>
+                
+                <motion.div
+                  animate={{ rotate: isExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ChevronDown className="w-6 h-6 text-slate-400" />
+                </motion.div>
+              </button>
+
+              {/* Module Content */}
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="border-t border-slate-100"
+                  >
+                    <div className="p-6 space-y-6">
+                      {modulo.unidades?.map((unidade, uIndex) => (
+                        <div key={uIndex} className="space-y-4">
+                          {unidade.titulo && (
+                            <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-amber-500" />
+                              {unidade.titulo}
+                            </h3>
+                          )}
+                          
+                          {unidade.conteudo?.map((item, iIndex) => (
+                            <ContentBlock 
+                              key={iIndex} 
+                              item={item} 
+                              moduleIndex={modIndex}
+                              unitIndex={uIndex}
+                              itemIndex={iIndex}
+                              isCompleted={completedMissions[`${modIndex}-${uIndex}-${iIndex}`]}
+                              onToggle={() => toggleMission(`${modIndex}-${uIndex}-${iIndex}`)}
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          );
+        })}
+
+        {/* Encerramento */}
+        {plano.encerramento && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border border-purple-200"
+          >
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Star className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">
+                Você Chegou ao Fim, mas é só o Começo
+              </h2>
+            </div>
+
+            {plano.encerramento.pergunta_poderosa && (
+              <div className="bg-white/70 rounded-xl p-6 mb-6 border border-purple-300">
+                <p className="text-lg font-medium text-purple-900 mb-2">
+                  💭 Reflita sobre isso:
+                </p>
+                <p className="text-slate-700 italic leading-relaxed">
+                  "{plano.encerramento.pergunta_poderosa}"
+                </p>
+              </div>
+            )}
+
+            {plano.encerramento.citacao && (
+              <div className="bg-white/70 rounded-xl p-6 mb-6 border-l-4 border-amber-500">
+                <p className="text-slate-700 italic mb-2">
+                  "{plano.encerramento.citacao.texto}"
+                </p>
+                <p className="text-sm text-slate-600 font-medium">
+                  — {plano.encerramento.citacao.autor}
+                </p>
+              </div>
+            )}
+
+            {plano.encerramento.mensagem_final && (
+              <p className="text-slate-700 leading-relaxed text-center whitespace-pre-line">
+                {plano.encerramento.mensagem_final}
+              </p>
+            )}
+          </motion.div>
+        )}
+      </div>
+    );
+  }
+
+  // Fallback para planos antigos (markdown)
+  return <LegacyMarkdownContent conteudo={plano.conteudo_markdown} />;
+}
+
+// Componente para renderizar cada tipo de bloco de conteúdo
+function ContentBlock({ item, moduleIndex, unitIndex, itemIndex, isCompleted, onToggle }) {
+  if (item.tipo === 'paragrafo') {
+    return (
+      <p className="text-slate-700 leading-relaxed whitespace-pre-line">
+        {item.texto}
+      </p>
+    );
+  }
+
+  if (item.tipo === 'destaque') {
+    const styles = {
+      saiba_mais: { bg: 'bg-blue-50', border: 'border-blue-300', icon: Info, iconColor: 'text-blue-600', title: 'Saiba Mais' },
+      atencao: { bg: 'bg-amber-50', border: 'border-amber-300', icon: AlertCircle, iconColor: 'text-amber-600', title: 'Atenção' },
+      dica: { bg: 'bg-green-50', border: 'border-green-300', icon: Lightbulb, iconColor: 'text-green-600', title: 'Dica' }
+    };
+    const style = styles[item.estilo] || styles.saiba_mais;
+    const Icon = style.icon;
+
+    return (
+      <div className={`${style.bg} rounded-xl p-4 border ${style.border}`}>
+        <div className="flex items-start gap-3">
+          <Icon className={`w-5 h-5 ${style.iconColor} shrink-0 mt-0.5`} />
+          <div>
+            <p className={`text-sm font-semibold ${style.iconColor} mb-1`}>{style.title}</p>
+            <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+              {item.texto}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (item.tipo === 'infografico') {
+    return (
+      <div className="bg-slate-50 rounded-xl p-6 border-2 border-dashed border-slate-300">
+        <div className="flex items-start gap-3">
+          <TrendingUp className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-slate-700 mb-2">📊 Infográfico Sugerido</p>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              {item.descricao}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (item.tipo === 'missao') {
+    return (
+      <motion.button
+        onClick={onToggle}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className={`w-full text-left rounded-xl p-5 transition-all ${
+          isCompleted 
+            ? 'bg-emerald-50 border-2 border-emerald-300' 
+            : 'bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 hover:border-orange-300'
+        }`}
+      >
+        <div className="flex items-start gap-4">
+          <div className={`w-10 h-10 rounded-xl shrink-0 flex items-center justify-center ${
+            isCompleted ? 'bg-emerald-500' : 'bg-orange-500'
+          }`}>
+            {isCompleted ? (
+              <CheckCircle2 className="w-6 h-6 text-white" />
+            ) : (
+              <Zap className="w-6 h-6 text-white" />
+            )}
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-xs font-bold text-orange-600 bg-orange-200 px-2 py-0.5 rounded-full">
+                MISSÃO NÍVEL {item.nivel || 1}
+              </span>
+            </div>
+            <h4 className={`font-bold mb-2 ${isCompleted ? 'text-slate-500 line-through' : 'text-slate-900'}`}>
+              {item.titulo}
+            </h4>
+            <p className={`text-sm leading-relaxed ${isCompleted ? 'text-slate-500' : 'text-slate-700'}`}>
+              {item.descricao}
+            </p>
+          </div>
+        </div>
+      </motion.button>
+    );
+  }
+
+  if (item.tipo === 'cta') {
+    return (
+      <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl p-6 text-white">
+        <div className="flex items-center gap-3 mb-3">
+          <ChevronRight className="w-6 h-6" />
+          <h4 className="font-bold text-lg">Ação Imediata</h4>
+        </div>
+        <p className="leading-relaxed mb-4">{item.texto}</p>
+        {item.acao && (
+          <div className="text-sm bg-white/20 rounded-lg px-4 py-2 inline-block">
+            {item.acao}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (item.tipo === 'lista') {
+    return (
+      <ul className="space-y-2 ml-4">
+        {item.itens?.map((listItem, idx) => (
+          <li key={idx} className="flex items-start gap-3">
+            <ChevronRight className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+            <span className="text-slate-700">{listItem}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  if (item.tipo === 'glossario') {
+    return (
+      <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+        <div className="flex items-start gap-3">
+          <BookOpen className="w-5 h-5 text-slate-600 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-slate-900 mb-1">
+              {item.titulo || 'Glossário'}
+            </p>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              {item.texto}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
+// Helper para mapear ícones
+function getIconComponent(iconName) {
+  const icons = {
+    target: Target,
+    trending: TrendingUp,
+    calendar: Calendar,
+    award: Award,
+    lightbulb: Lightbulb,
+    sparkles: Sparkles,
+    star: Star,
+    zap: Zap
+  };
+  return icons[iconName] || Target;
+}
+
+// Fallback para planos antigos em markdown
+function LegacyMarkdownContent({ conteudo }) {
+  return (
+    <div className="bg-white rounded-2xl p-8 shadow-lg">
+      <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+        {conteudo}
+      </p>
     </div>
   );
 }
