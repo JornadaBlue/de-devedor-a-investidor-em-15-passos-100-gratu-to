@@ -135,9 +135,13 @@ export default function Encerramento() {
               size="lg"
               className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold py-6 rounded-xl shadow-lg mb-3"
             >
-              Entrar no clube por R$27/mês
+              Entrar no clube por R$27/mês + plano R$17
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
+
+            <p className="text-center text-sm text-slate-600 mb-3">
+              Ao assinar o clube, você também receberá o plano personalizado (investimento único de R$17)
+            </p>
 
             <p className="text-center text-xs text-slate-400">
               Cancele quando quiser • Sem fidelidade
@@ -146,9 +150,9 @@ export default function Encerramento() {
 
           <button
             onClick={handleSkipUpsell}
-            className="w-full text-center text-slate-400 hover:text-slate-300 text-sm py-3 transition-colors"
+            className="w-full text-center text-white hover:text-amber-300 text-base md:text-lg font-semibold py-4 transition-colors bg-white/5 rounded-xl border-2 border-white/10 hover:border-amber-400/30"
           >
-            Não, obrigado. Quero apenas o plano personalizado.
+            Não, obrigado. Quero apenas o plano personalizado por R$17.
           </button>
         </motion.div>
       </div>
