@@ -54,42 +54,54 @@ export default function Dashboard() {
 
   const updateProgressMutation = useMutation({
     mutationFn: async (step) => {
+      console.log('🔵 Iniciando mutation - Step:', step, 'ProfileId:', profileId);
+      
       if (!profileId) {
+        console.error('❌ ProfileId não encontrado');
         throw new Error('Profile ID não encontrado');
       }
       
-      // Busca o profile atualizado do cache/servidor
-      const profiles = await base44.entities.UserProfile.filter({ id: profileId });
-      const currentProfile = profiles[0];
-      
-      if (!currentProfile) {
-        throw new Error('Profile não encontrado');
+      if (!profile) {
+        console.error('❌ Profile não carregado');
+        throw new Error('Profile não carregado');
       }
       
-      const currentProgress = currentProfile.progresso || [];
+      console.log('📊 Profile atual:', profile);
+      console.log('📊 Progresso atual:', profile.progresso);
+      
+      const currentProgress = profile.progresso || [];
       const newProgress = [...currentProgress];
       
       if (!newProgress.includes(step)) {
         newProgress.push(step);
       }
       
-      await base44.entities.UserProfile.update(currentProfile.id, { 
+      console.log('📊 Novo progresso:', newProgress);
+      
+      await base44.entities.UserProfile.update(profile.id, { 
         progresso: newProgress 
       });
       
-      return { newProgress, userName: currentProfile.nome };
+      console.log('✅ Progresso salvo com sucesso');
+      
+      return { newProgress, userName: profile.nome };
     },
     onSuccess: async (data) => {
+      console.log('✅ Mutation success - Dados:', data);
+      
       // Refetch explícito
       await queryClient.refetchQueries({ queryKey: ['userProfile', profileId] });
       
+      console.log('✅ Refetch concluído');
+      
       // Se completou todos os 15 passos, vai para encerramento
       if (data.newProgress && data.newProgress.length >= 15) {
+        console.log('🎉 Todos os passos completados - Navegando para Encerramento');
         navigate(createPageUrl('Encerramento') + `?id=${profileId}&nome=${encodeURIComponent(data.userName || 'Usuário')}`);
       }
     },
     onError: (error) => {
-      console.error('Erro ao atualizar progresso:', error);
+      console.error('❌ Erro na mutation:', error);
     },
   });
 
