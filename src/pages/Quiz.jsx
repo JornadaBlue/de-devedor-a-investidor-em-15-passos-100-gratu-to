@@ -84,8 +84,7 @@ export default function Quiz() {
       // Limpa as respostas salvas
       localStorage.removeItem('quizAnswers');
       
-      const nextUrl = createPageUrl('PreparandoPlano') + `?id=${userProfile.id}&perfil=${profile}&nome=${encodeURIComponent(answers.nome)}`;
-      navigate(nextUrl);
+      navigate(createPageUrl('Home'));
     } catch (error) {
       console.error('Erro ao salvar:', error);
       alert('Erro ao salvar: ' + error.message);
