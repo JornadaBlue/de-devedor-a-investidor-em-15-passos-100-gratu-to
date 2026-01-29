@@ -68,12 +68,12 @@ export default function Clube() {
           </p>
 
           <Button
-            onClick={() => navigate(createPageUrl('Dashboard'))}
+            onClick={() => navigate(createPageUrl('Home'))}
             variant="outline"
             className="border-slate-600 text-slate-300 hover:bg-slate-800"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar ao Dashboard
+            Voltar
           </Button>
         </motion.div>
       </div>
@@ -86,12 +86,12 @@ export default function Clube() {
         {/* Header */}
         <div className="mb-8">
           <Button
-            onClick={() => navigate(createPageUrl('Dashboard'))}
+            onClick={() => navigate(createPageUrl('Home'))}
             variant="ghost"
             className="text-slate-400 hover:text-white mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar ao Dashboard
+            Voltar
           </Button>
 
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">

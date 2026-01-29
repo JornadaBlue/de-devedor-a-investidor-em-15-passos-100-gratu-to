@@ -51,12 +51,12 @@ import AdminClube from './pages/AdminClube';
 import Clube from './pages/Clube';
 import Dashboard from './pages/Dashboard';
 import Encerramento from './pages/Encerramento';
+import Home from './pages/Home';
 import Landing from './pages/Landing';
 import MeuPlano from './pages/MeuPlano';
 import PreparandoPlano from './pages/PreparandoPlano';
 import Quiz from './pages/Quiz';
 import Resultado from './pages/Resultado';
-import Home from './pages/Home';
 
 
 export const PAGES = {
@@ -64,12 +64,12 @@ export const PAGES = {
     "Clube": Clube,
     "Dashboard": Dashboard,
     "Encerramento": Encerramento,
+    "Home": Home,
     "Landing": Landing,
     "MeuPlano": MeuPlano,
     "PreparandoPlano": PreparandoPlano,
     "Quiz": Quiz,
     "Resultado": Resultado,
-    "Home": Home,
 }
 
 export const pagesConfig = {
