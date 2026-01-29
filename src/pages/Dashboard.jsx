@@ -54,58 +54,27 @@ export default function Dashboard() {
 
   const updateProgressMutation = useMutation({
     mutationFn: async (step) => {
-      console.log('🔵 Iniciando mutation - Step:', step, 'ProfileId:', profileId);
-      
-      if (!profileId) {
-        console.error('❌ ProfileId não encontrado');
-        throw new Error('Profile ID não encontrado');
+      if (!profileId || !profile) {
+        throw new Error('Profile não carregado');
       }
       
-      // Busca o profile direto do banco
-      const profiles = await base44.entities.UserProfile.filter({ id: profileId });
-      const currentProfile = profiles[0];
+      const currentProgress = profile.progresso || [];
+      const newProgress = [...currentProgress, step].filter((v, i, a) => a.indexOf(v) === i);
       
-      if (!currentProfile) {
-        console.error('❌ Profile não encontrado no banco');
-        throw new Error('Profile não encontrado');
-      }
-      
-      console.log('📊 Profile encontrado:', currentProfile);
-      console.log('📊 Progresso atual:', currentProfile.progresso);
-      
-      const currentProgress = currentProfile.progresso || [];
-      const newProgress = [...currentProgress];
-      
-      if (!newProgress.includes(step)) {
-        newProgress.push(step);
-      }
-      
-      console.log('📊 Novo progresso:', newProgress);
-      
-      await base44.entities.UserProfile.update(currentProfile.id, { 
+      await base44.entities.UserProfile.update(profileId, { 
         progresso: newProgress 
       });
       
-      console.log('✅ Progresso salvo com sucesso');
-      
-      return { newProgress, userName: currentProfile.nome };
+      return { newProgress, userName: profile.nome, profileId };
     },
-    onSuccess: async (data) => {
-      console.log('✅ Mutation success - Dados:', data);
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['userProfile', profileId] });
       
-      // Refetch explícito
-      await queryClient.refetchQueries({ queryKey: ['userProfile', profileId] });
-      
-      console.log('✅ Refetch concluído');
-      
-      // Se completou todos os 15 passos, vai para encerramento
-      if (data.newProgress && data.newProgress.length >= 15) {
-        console.log('🎉 Todos os passos completados - Navegando para Encerramento');
-        navigate(createPageUrl('Encerramento') + `?id=${profileId}&nome=${encodeURIComponent(data.userName || 'Usuário')}`);
+      if (data.newProgress.length >= 15) {
+        setTimeout(() => {
+          navigate(createPageUrl('Encerramento') + `?id=${data.profileId}&nome=${encodeURIComponent(data.userName || 'Usuário')}`);
+        }, 300);
       }
-    },
-    onError: (error) => {
-      console.error('❌ Erro na mutation:', error);
     },
   });
 
