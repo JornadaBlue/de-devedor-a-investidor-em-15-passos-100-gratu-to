@@ -32,8 +32,8 @@ export default function AdminClube() {
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
         <div className="bg-white rounded-2xl p-8 max-w-md text-center shadow-lg">
           <p className="text-slate-700 mb-4">Acesso restrito a administradores</p>
-          <Link to={createPageUrl('Landing')}>
-            <Button variant="outline">Voltar ao início</Button>
+          <Link to={createPageUrl('Home')}>
+            <Button variant="outline">Voltar</Button>
           </Link>
         </div>
       </div>
@@ -89,7 +89,7 @@ export default function AdminClube() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <Link to={createPageUrl('Landing')}>
+            <Link to={createPageUrl('Home')}>
               <Button variant="ghost" size="sm" className="mb-2">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Voltar
