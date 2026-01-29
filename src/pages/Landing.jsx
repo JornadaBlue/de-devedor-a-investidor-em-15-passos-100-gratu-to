@@ -20,7 +20,7 @@ export default function Landing() {
       const profiles = await base44.entities.UserProfile.filter({ created_by: user.email });
       
       if (profiles.length > 0) {
-        navigate(createPageUrl('Dashboard') + `?id=${profiles[0].id}`);
+        navigate(createPageUrl('Home'));
       } else {
         navigate(createPageUrl('Quiz'));
       }

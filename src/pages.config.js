@@ -56,6 +56,7 @@ import MeuPlano from './pages/MeuPlano';
 import PreparandoPlano from './pages/PreparandoPlano';
 import Quiz from './pages/Quiz';
 import Resultado from './pages/Resultado';
+import Home from './pages/Home';
 
 
 export const PAGES = {
@@ -68,6 +69,7 @@ export const PAGES = {
     "PreparandoPlano": PreparandoPlano,
     "Quiz": Quiz,
     "Resultado": Resultado,
+    "Home": Home,
 }
 
 export const pagesConfig = {
