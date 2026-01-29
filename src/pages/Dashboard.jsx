@@ -54,22 +54,30 @@ export default function Dashboard() {
 
   const updateProgressMutation = useMutation({
     mutationFn: async (step) => {
-      if (!profile || !profile.id) {
+      if (!profileId) {
+        throw new Error('Profile ID não encontrado');
+      }
+      
+      // Busca o profile atualizado do cache/servidor
+      const profiles = await base44.entities.UserProfile.filter({ id: profileId });
+      const currentProfile = profiles[0];
+      
+      if (!currentProfile) {
         throw new Error('Profile não encontrado');
       }
       
-      const currentProgress = profile.progresso || [];
+      const currentProgress = currentProfile.progresso || [];
       const newProgress = [...currentProgress];
       
       if (!newProgress.includes(step)) {
         newProgress.push(step);
       }
       
-      await base44.entities.UserProfile.update(profile.id, { 
+      await base44.entities.UserProfile.update(currentProfile.id, { 
         progresso: newProgress 
       });
       
-      return { newProgress, profileId: profile.id };
+      return { newProgress, userName: currentProfile.nome };
     },
     onSuccess: async (data) => {
       // Refetch explícito
@@ -77,7 +85,7 @@ export default function Dashboard() {
       
       // Se completou todos os 15 passos, vai para encerramento
       if (data.newProgress && data.newProgress.length >= 15) {
-        navigate(createPageUrl('Encerramento') + `?id=${profileId}&nome=${encodeURIComponent(profile?.nome || 'Usuário')}`);
+        navigate(createPageUrl('Encerramento') + `?id=${profileId}&nome=${encodeURIComponent(data.userName || 'Usuário')}`);
       }
     },
     onError: (error) => {
