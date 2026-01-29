@@ -61,15 +61,19 @@ export default function Dashboard() {
         throw new Error('Profile ID não encontrado');
       }
       
-      if (!profile) {
-        console.error('❌ Profile não carregado');
-        throw new Error('Profile não carregado');
+      // Busca o profile direto do banco
+      const profiles = await base44.entities.UserProfile.filter({ id: profileId });
+      const currentProfile = profiles[0];
+      
+      if (!currentProfile) {
+        console.error('❌ Profile não encontrado no banco');
+        throw new Error('Profile não encontrado');
       }
       
-      console.log('📊 Profile atual:', profile);
-      console.log('📊 Progresso atual:', profile.progresso);
+      console.log('📊 Profile encontrado:', currentProfile);
+      console.log('📊 Progresso atual:', currentProfile.progresso);
       
-      const currentProgress = profile.progresso || [];
+      const currentProgress = currentProfile.progresso || [];
       const newProgress = [...currentProgress];
       
       if (!newProgress.includes(step)) {
@@ -78,13 +82,13 @@ export default function Dashboard() {
       
       console.log('📊 Novo progresso:', newProgress);
       
-      await base44.entities.UserProfile.update(profile.id, { 
+      await base44.entities.UserProfile.update(currentProfile.id, { 
         progresso: newProgress 
       });
       
       console.log('✅ Progresso salvo com sucesso');
       
-      return { newProgress, userName: profile.nome };
+      return { newProgress, userName: currentProfile.nome };
     },
     onSuccess: async (data) => {
       console.log('✅ Mutation success - Dados:', data);
