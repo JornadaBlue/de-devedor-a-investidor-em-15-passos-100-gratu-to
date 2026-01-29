@@ -46,6 +46,14 @@ export default function Dashboard() {
     queryKey: ['userProfile', profileId],
     queryFn: async () => {
       if (!profileId) return null;
+      
+      // Verifica autenticação
+      const isAuthenticated = await base44.auth.isAuthenticated();
+      if (!isAuthenticated) {
+        base44.auth.redirectToLogin(window.location.href);
+        return null;
+      }
+      
       const profiles = await base44.entities.UserProfile.filter({ id: profileId });
       return profiles[0] || null;
     },

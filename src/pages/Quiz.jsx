@@ -6,6 +6,15 @@ import QuizForm from '../components/quiz/QuizForm';
 
 export default function Quiz() {
   const navigate = useNavigate();
+  
+  // Verifica se há respostas salvas após login
+  React.useEffect(() => {
+    const savedAnswers = localStorage.getItem('quizAnswers');
+    if (savedAnswers) {
+      const answers = JSON.parse(savedAnswers);
+      handleComplete(answers);
+    }
+  }, []);
 
   const calculateProfile = (answers) => {
     // Perfil C: Endividado e desorganizado - termina em falta E tem dívidas
@@ -38,12 +47,20 @@ export default function Quiz() {
   };
 
   const handleComplete = async (answers) => {
-    console.log('🔵 handleComplete iniciado');
-    console.log('📋 Respostas recebidas:', answers);
-    
     try {
+      // Verifica se o usuário está autenticado
+      const isAuthenticated = await base44.auth.isAuthenticated();
+      
+      if (!isAuthenticated) {
+        // Salva as respostas no localStorage para recuperar após login
+        localStorage.setItem('quizAnswers', JSON.stringify(answers));
+        
+        // Redireciona para login
+        base44.auth.redirectToLogin(window.location.href);
+        return;
+      }
+      
       const profile = calculateProfile(answers);
-      console.log('✅ Perfil calculado:', profile);
       
       const dataToSave = {
         nome: answers.nome,
@@ -62,22 +79,15 @@ export default function Quiz() {
         data_inicio: new Date().toISOString().split('T')[0],
       };
       
-      console.log('💾 Dados a salvar:', dataToSave);
-      console.log('🚀 Iniciando salvamento...');
-      
       const userProfile = await base44.entities.UserProfile.create(dataToSave);
       
-      console.log('✅ Perfil salvo com sucesso:', userProfile);
+      // Limpa as respostas salvas
+      localStorage.removeItem('quizAnswers');
       
       const nextUrl = createPageUrl('PreparandoPlano') + `?id=${userProfile.id}&perfil=${profile}&nome=${encodeURIComponent(answers.nome)}`;
-      console.log('🔗 Navegando para:', nextUrl);
-      
       navigate(nextUrl);
-      console.log('✅ Navegação completada');
     } catch (error) {
-      console.error('❌ ERRO CAPTURADO:', error);
-      console.error('❌ Mensagem:', error.message);
-      console.error('❌ Stack:', error.stack);
+      console.error('Erro ao salvar:', error);
       alert('Erro ao salvar: ' + error.message);
     }
   };
