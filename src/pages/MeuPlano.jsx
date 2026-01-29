@@ -67,12 +67,12 @@ export default function MeuPlano() {
             Este plano personalizado está disponível apenas para quem adquiriu o acesso premium.
           </p>
           <Button
-            onClick={() => navigate(createPageUrl('Dashboard'))}
+            onClick={() => navigate(createPageUrl('Home'))}
             variant="outline"
             className="w-full"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar ao Dashboard
+            Voltar
           </Button>
         </motion.div>
       </div>
