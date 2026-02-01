@@ -84,8 +84,8 @@ export default function Quiz() {
       // Limpa as respostas salvas
       localStorage.removeItem('quizAnswers');
       
-      // Redireciona para o Dashboard dos 15 passos gratuitos
-      navigate(createPageUrl('Dashboard') + `?id=${userProfile.id}`);
+      // Redireciona para a página de Resultado (diagnóstico)
+      navigate(createPageUrl('Resultado') + `?id=${userProfile.id}`);
     } catch (error) {
       console.error('Erro ao salvar:', error);
       alert('Erro ao salvar: ' + error.message);
