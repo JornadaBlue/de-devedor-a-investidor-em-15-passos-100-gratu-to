@@ -84,7 +84,8 @@ export default function Quiz() {
       // Limpa as respostas salvas
       localStorage.removeItem('quizAnswers');
       
-      navigate(createPageUrl('Home'));
+      // Redireciona para a página de encerramento com oferta do plano
+      navigate(createPageUrl('Encerramento') + `?id=${userProfile.id}&nome=${encodeURIComponent(answers.nome)}`);
     } catch (error) {
       console.error('Erro ao salvar:', error);
       alert('Erro ao salvar: ' + error.message);
