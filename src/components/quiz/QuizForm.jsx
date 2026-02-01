@@ -290,27 +290,29 @@ export default function QuizForm({ onComplete }) {
 
       {/* Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-slate-100">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <Button
-            variant="ghost"
-            onClick={handleBack}
-            disabled={step === 0}
-            className="text-slate-600"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar
-          </Button>
-          
-          {currentQuestion.type === 'personal' && (
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between max-w-xl mx-auto">
             <Button
-              onClick={handleNext}
-              disabled={!canProceed()}
-              className="bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-900 font-semibold px-8"
+              variant="ghost"
+              onClick={handleBack}
+              disabled={step === 0}
+              className="text-slate-600"
             >
-              Continuar
-              <ArrowRight className="w-4 h-4 ml-2" />
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Voltar
             </Button>
-          )}
+            
+            {currentQuestion.type === 'personal' && (
+              <Button
+                onClick={handleNext}
+                disabled={!canProceed()}
+                className="bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-900 font-semibold px-8"
+              >
+                Continuar
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>
